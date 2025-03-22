@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <style type="text/css">
+      :root {
+        --url: url("");
+      }
+
+      html,
+      body {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: #141414;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: consolas, "poppins", monospace;
+        color: white;
+        user-select: none;
+      }
+
+      .margin:first-child {
+        background-image: var(--url);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .lines-content:nth-of-type(1),
+      .monaco-editor-background:nth-of-type(1) {
+        background-image: var(--url);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .tab-container {
+        display: flex;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 5px;
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        z-index: 1000;
+      }
+
+      .tab {
+        padding: 4px 10px;
+        color: #fff;
+        font-size: 10px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.5s ease;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0 4px;
+        border-radius: 6px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        height: 24px;
+      }
+
+      .tab img {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        transform: scale(2);
+      }
+
+      .tab::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 150%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 0, 0, 0.6),
+          transparent
+        );
+        transition: all 1s ease;
+        z-index: -1;
+      }
+
+      .tab:hover::before {
+        left: 100%;
+      }
+
+      .tab:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(255, 0, 0, 0.6);
+        border: 1px solid rgba(255, 65, 108, 0.8);
+      }
+
+      .tab.active {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: #fff;
+        font-weight: bold;
+        box-shadow: 0 2px 10px rgba(255, 65, 108, 0.8);
+        transition: background 0.5s ease, box-shadow 0.5s ease,
+          transform 0.5s ease;
+        border: 1px solid rgba(255, 65, 108, 0.8);
+      }
+
+      .tab .close-btn {
+        margin-left: 6px;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: color 0.3s ease;
+        font-size: 10px;
+      }
+
+      .tab .close-btn:hover {
+        color: rgba(255, 255, 255, 1);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .tab {
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+      }
+
+      .tab.removing {
+        animation: fadeOut 0.5s ease-in;
+      }
+
+      #container {
+        position: absolute;
+        top: 50px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #0d0d0d;
+      }
+
+      .add-tab-btn {
+        padding: 4px 10px;
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-left: 8px;
+        font-family: consolas, "poppins", monospace;
+        font-size: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        height: 24px;
+      }
+
+      .add-tab-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(255, 0, 0, 0.6);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background: #1e1e1e;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(255, 0, 0, 0.6);
+        transform: scale(0.8);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        width: 240px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .modal::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 65, 108, 0.6),
+          rgba(255, 75, 43, 0.6)
+        );
+        z-index: -1;
+        transform: rotate(45deg);
+        animation: rotateBackground 10s linear infinite;
+      }
+
+      @keyframes rotateBackground {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .modal-overlay.active .modal {
+        transform: scale(1);
+      }
+
+      .modal input {
+        width: 100%;
+        padding: 6px;
+        margin: 0 0 8px 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        background: #2d2d2d;
+        color: white;
+        font-family: consolas, "poppins", monospace;
+        font-size: 10px;
+        outline: none;
+        transition: border-color 0.3s ease;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .modal input:focus {
+        border-color: #ff416c;
+      }
+
+      .modal button {
+        padding: 6px 12px;
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: consolas, "poppins", monospace;
+        font-size: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .modal button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(255, 0, 0, 0.6);
+      }
+
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        color: white;
+        font-family: consolas, "poppins", monospace;
+        font-size: 14px;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        z-index: 3000;
+      }
+
+      .notification.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background: linear-gradient(135deg, #00c853, #00e676);
+        box-shadow: 0 4px 10px rgba(0, 200, 83, 0.6);
+      }
+
+      .notification.error {
+        background: linear-gradient(135deg, #d50000, #ff1744);
+        box-shadow: 0 4px 10px rgba(213, 0, 0, 0.6);
+      }
+    </style>
+    <meta charset="utf-8" />
+    <title>Monaco Editor with Tabs</title>
+  </head>
+
+  <body>
+    <div class="tab-container">
+      <button class="add-tab-btn" onclick="showModal()">+</button>
+    </div>
+
+    <div id="container" style="width: 100%; height: calc(100% - 50px)"></div>
+
+    <div class="modal-overlay">
+      <div class="modal">
+        <input type="text" id="tab-name" placeholder="Enter tab name" />
+        <button onclick="createTab()">Create</button>
+      </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="vs/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script type="text/javascript">
+      require.config({
+        paths: {
+          vs: "vs",
+        },
+      });
+
+      let editor;
+      let tabs = {};
+      let activeTabId = null;
+
+      require(["vs/editor/editor.main"], function () {
+        monaco.editor.defineTheme("DarkRedTheme", {
+          base: "vs-dark",
+          inherit: true,
+          rules: [
+            { token: "comment", foreground: "#ff6666", fontStyle: "italic" },
+            { token: "keyword", foreground: "#ff416c" },
+            { token: "string", foreground: "#ff4b2b" },
+            { token: "number", foreground: "#ff8080" },
+            { token: "operator", foreground: "#ff416c" },
+            { token: "identifier", foreground: "#ffffff" },
+            { token: "delimiter", foreground: "#ff416c" },
+            { token: "type", foreground: "#ff416c" },
+            { token: "function", foreground: "#00ff00" },
+            { token: "print", foreground: "#00ff00" },
+            { token: "function.call", foreground: "#00ff00" },
+          ],
+          colors: {
+            "editor.background": "#0d0d0d",
+            "editor.foreground": "#ffffff",
+            "editorCursor.foreground": "#ff416c",
+            "editor.lineHighlightBackground": "#1e1e1e",
+            "editor.selectionBackground": "#3d3d3d",
+            "minimap.background": "#0d0d0d",
+          },
+        });
+
+        editor = monaco.editor.create(document.getElementById("container"), {
+          value: "",
+          language: "lua",
+          theme: "DarkRedTheme",
+          folding: true,
+          dragAndDrop: true,
+          links: true,
+          minimap: {
+            enabled: false,
+          },
+          showFoldingControls: "always",
+          smoothScrolling: true,
+          stopRenderingLineAfter: 6500,
+          fontSize: 15,
+          cursorBlinking: "smooth",
+          cursorSmoothCaretAnimation: true,
+          foldingHighlight: true,
+          fontLigatures: true,
+          formatOnPaste: true,
+          showDeprecated: true,
+          suggest: {
+            snippetsPreventQuickSuggestions: true,
+          },
+        });
+
+        window.onresize = function () {
+          editor.layout();
+        };
+
+        editor.onKeyDown((e) => {
+          if (
+            e.ctrlKey &&
+            (e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 88)
+          ) {
+            e.preventDefault();
+          }
+        });
+      });
+
+      const tabContainer = document.querySelector(".tab-container");
+      const modalOverlay = document.querySelector(".modal-overlay");
+      const tabNameInput = document.getElementById("tab-name");
+      const notification = document.getElementById("notification");
+
+      Sortable.create(tabContainer, {
+        animation: 150,
+        onEnd: function (evt) {
+          const newOrder = Array.from(
+            tabContainer.querySelectorAll(".tab")
+          ).map((tab) => tab.getAttribute("data-tab-id"));
+          const newTabs = {};
+          newOrder.forEach((id) => {
+            newTabs[id] = tabs[id];
+          });
+          tabs = newTabs;
+        },
+      });
+
+      function showModal() {
+        modalOverlay.classList.add("active");
+      }
+
+      function hideModal() {
+        modalOverlay.classList.remove("active");
+      }
+
+      function showNotification(message, type) {
+        notification.textContent = message;
+        notification.className = `notification ${type} show`;
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      function createTab() {
+        const tabName =
+          tabNameInput.value.trim() ||
+          `Untitled-${Object.keys(tabs).length + 1}`;
+        const tabId = Date.now();
+        tabs[tabId] = { content: "" };
+
+        const newTab = document.createElement("div");
+        newTab.className = "tab";
+        newTab.setAttribute("data-tab-id", tabId);
+        newTab.innerHTML = `<img src="logo.png" alt="logo" />${tabName} <span class="close-btn">×</span>`;
+        tabContainer.insertBefore(
+          newTab,
+          document.querySelector(".add-tab-btn")
+        );
+
+        newTab.querySelector(".close-btn").addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeTab(tabId);
+        });
+
+        newTab.addEventListener("click", () => {
+          switchTab(tabId);
+        });
+
+        switchTab(tabId);
+        hideModal();
+        tabNameInput.value = "";
+        showNotification(`Add new ${tabName} tab`, "success");
+      }
+
+      function switchTab(tabId) {
+        if (activeTabId === tabId) return;
+
+        if (activeTabId !== null && tabs[activeTabId]) {
+          tabs[activeTabId].content = editor.getValue();
+        }
+
+        document
+          .querySelectorAll(".tab")
+          .forEach((tab) => tab.classList.remove("active"));
+        const activeTab = document.querySelector(
+          `.tab[data-tab-id="${tabId}"]`
+        );
+        activeTab.classList.add("active");
+
+        editor.setValue(tabs[tabId].content || "");
+        activeTabId = tabId;
+      }
+
+      function closeTab(tabId) {
+        if (Object.keys(tabs).length === 1) {
+          alert("Нельзя закрыть последнюю вкладку!");
+          return;
+        }
+
+        const tabToRemove = document.querySelector(
+          `.tab[data-tab-id="${tabId}"]`
+        );
+        const tabName = tabToRemove.textContent.trim();
+        tabToRemove.classList.add("removing");
+
+        setTimeout(() => {
+          tabToRemove.remove();
+          delete tabs[tabId];
+
+          const nextTabId = Object.keys(tabs)[0];
+          switchTab(nextTabId);
+          showNotification(`Delete ${tabName} tab`, "error");
+        }, 300);
+      }
+    </script>
+  </body>
+</html>
