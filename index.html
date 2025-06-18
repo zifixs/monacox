@@ -328,13 +328,15 @@
             box-sizing: border-box;
             min-width: 140px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
             position: relative;
+            overflow: hidden;
+            border: 1px solid #3a3a3a;
         }
 
         .music-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: #8C52FF;
         }
 
         .music-card img {
@@ -343,6 +345,7 @@
             border-radius: 10px;
             object-fit: cover;
             margin-bottom: 10px;
+            transition: filter 0.3s ease;
         }
 
         .music-card .song-title {
@@ -364,41 +367,62 @@
             width: 100%;
         }
 
-        .music-card .play-button-overlay {
-            position: absolute;
-            top: 15px;
-            left: 15px;
+        .music-card-image-wrapper {
+            position: relative;
             width: 100px;
             height: 100px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .music-card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: filter 0.3s ease;
+            margin-bottom: 0; /* Override previous margin-bottom */
+        }
+
+        .music-card-image-wrapper .play-button-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
             opacity: 0;
             transition: opacity 0.3s ease;
-            pointer-events: none;
-            overflow: hidden;
+            pointer-events: none; /* Allows click to pass through to the image wrapper */
         }
 
-        .music-card:hover .play-button-overlay {
+        .music-card-image-wrapper:hover .play-button-overlay {
             opacity: 1;
-            pointer-events: auto;
+            pointer-events: auto; /* Enable pointer events on hover */
         }
 
-        .music-card .play-button-overlay img {
-            width: 50px;
-            height: 50px;
-            opacity: 0.8;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            border-radius: 0;
-            margin-bottom: 0;
+        .music-card-image-wrapper:hover img {
+            filter: blur(2px);
         }
 
-        .music-card .play-button-overlay img:hover {
+        .music-card-image-wrapper .play-button-overlay img {
+            width: 40px;
+            height: 40px;
+            filter: none;
+            transition: transform 0.2s ease;
+            margin: 0;
+        }
+
+        .music-card-image-wrapper .play-button-overlay img:hover {
             transform: scale(1.1);
-            opacity: 1;
         }
+
 
         .audio-player-bar {
             position: fixed;
@@ -521,6 +545,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.2s ease;
         }
 
         #prevButton img {
@@ -530,15 +555,15 @@
         .player-control-button img {
             width: 25px;
             height: 25px;
-            transition: transform 0.2s ease;
+            transition: inherit;
         }
 
-        .player-control-button:hover img {
+        .player-control-button:hover {
             transform: scale(1.1);
         }
 
         #prevButton:hover img {
-            transform: scale(1.1) scaleX(-1);
+            transform: scaleX(-1);
         }
 
         .progress-container {
@@ -635,6 +660,30 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
 
+        .upload-button-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .upload-button {
+            background-color: #8C52FF;
+            color: #E0E0E0;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-button:hover {
+            background-color: #7a42e0;
+            transform: translateY(-2px);
+        }
+
         .top-panel, .nav-sections, .left-panel, .right-nav-panel {
             flex-wrap: wrap;
             justify-content: center;
@@ -696,11 +745,13 @@
                 width: calc(25% - 12px);
                 min-width: 130px;
             }
-            .music-card .play-button-overlay {
-                width: 100px;
-                height: 100px;
-                top: 15px;
-                left: 15px;
+            .music-card-image-wrapper {
+                width: 90px;
+                height: 90px;
+            }
+            .music-card-image-wrapper .play-button-overlay img {
+                width: 35px;
+                height: 35px;
             }
 
             .audio-player-bar {
@@ -770,11 +821,13 @@
                 width: calc(33.33% - 10px);
                 min-width: 120px;
             }
-            .music-card .play-button-overlay {
-                width: calc(100% - 30px);
-                height: calc(100% - 30px);
-                top: 15px;
-                left: 15px;
+            .music-card-image-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+            .music-card-image-wrapper .play-button-overlay img {
+                width: 30px;
+                height: 30px;
             }
 
             .audio-player-bar {
@@ -840,11 +893,13 @@
                 width: calc(50% - 10px);
                 min-width: unset;
             }
-            .music-card .play-button-overlay {
-                width: calc(100% - 30px);
-                height: calc(100% - 30px);
-                top: 15px;
-                left: 15px;
+            .music-card-image-wrapper {
+                width: 70px;
+                height: 70px;
+            }
+            .music-card-image-wrapper .play-button-overlay img {
+                width: 25px;
+                height: 25px;
             }
 
             .audio-player-bar {
@@ -960,11 +1015,17 @@
         </div>
     </div>
 
+    <div class="upload-button-container">
+        <input type="file" id="jsonUploadInput" accept=".json" style="display: none;">
+        <button class="upload-button" id="uploadJsonButton">Загрузить JSON с треками</button>
+    </div>
+
     <div class="music-container" id="musicContainer">
-        </div>
+    </div>
 
     <div class="audio-player-bar">
-        <audio id="audioPlayer" src=""></audio> <div class="player-left-section">
+        <audio id="audioPlayer" src=""></audio>
+        <div class="player-left-section">
             <div class="player-info">
                 <img src="default_album.jpg" alt="Обложка альбома" id="currentAlbumArt">
                 <div class="play-pause-overlay" id="playerAlbumPlayPause">
@@ -979,6 +1040,9 @@
 
         <div class="player-center-section">
             <div class="player-controls">
+                <button class="player-control-button" id="shuffleButton">
+                    <img src="shuffle.png" alt="Перемешать" id="shuffleIcon">
+                </button>
                 <button class="player-control-button" id="prevButton">
                     <img src="sled.png" alt="Предыдущий трек">
                 </button>
@@ -987,6 +1051,9 @@
                 </button>
                 <button class="player-control-button" id="nextButton">
                     <img src="sled.png" alt="Следующий трек">
+                </button>
+                <button class="player-control-button" id="repeatButton">
+                    <img src="repeats.png" alt="Повтор" id="repeatIcon">
                 </button>
             </div>
             <div class="progress-container">
@@ -1022,6 +1089,10 @@
             const mainPlayPauseIcon = document.getElementById('mainPlayPauseIcon');
             const prevButton = document.getElementById('prevButton');
             const nextButton = document.getElementById('nextButton');
+            const shuffleButton = document.getElementById('shuffleButton');
+            const shuffleIcon = document.getElementById('shuffleIcon');
+            const repeatButton = document.getElementById('repeatButton');
+            const repeatIcon = document.getElementById('repeatIcon');
             const progressBar = document.getElementById('progressBar');
             const progressBarWrapper = document.getElementById('progressBarWrapper');
             const progressBarThumb = document.querySelector('.progress-bar-thumb');
@@ -1036,10 +1107,26 @@
             const playerAlbumPlayPause = document.getElementById('playerAlbumPlayPause');
             const playerAlbumPlayPauseIcon = document.getElementById('playerAlbumPlayPauseIcon');
 
+            const uploadJsonButton = document.getElementById('uploadJsonButton');
+            const jsonUploadInput = document.getElementById('jsonUploadInput');
+
             let musicData = [];
             let currentTrackIndex = -1;
             let isDraggingProgressBar = false;
             let lastVolume = audioPlayer.volume;
+            let shuffledIndices = [];
+            let isShuffled = false;
+            // 0: no repeat, 1: repeat all, 2: repeat one
+            let repeatMode = 0;
+
+            const initialMusicData = [
+                {
+                    "title": "akisedd - milk cassette x.mp3 x fight club",
+                    "artist": "akisedd",
+                    "avatar": "pr.png",
+                    "link": "akisedd - milk cassette x.mp3 x fight club.mp3"
+                }
+            ];
 
             function formatTime(seconds) {
                 const minutes = Math.floor(seconds / 60);
@@ -1090,20 +1177,33 @@
                 }
             });
 
-            async function loadMusic() {
-                try {
-                    const response = await fetch('music.json');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText || 'Unknown error'}`);
-                    }
-                    musicData = await response.json();
-                    displayMusic(musicData);
-                    if (musicData.length > 0) {
-                        loadTrack(0, false);
-                    }
-                } catch (error) {
-                    console.error('Ошибка загрузки музыки:', error);
-                    musicContainer.innerHTML = '<p style="color: #FF6347; text-align: center; width: 100%;">Не удалось загрузить музыкальные треки. Пожалуйста, убедитесь, что вы запустили сайт через локальный веб-сервер (например, Python).</p>';
+            function generateShuffledIndices(length) {
+                const arr = Array.from({ length }, (_, i) => i);
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function loadMusic(data) {
+                musicData = data;
+                if (isShuffled) {
+                    shuffledIndices = generateShuffledIndices(musicData.length);
+                }
+                displayMusic(musicData);
+                if (musicData.length > 0) {
+                    loadTrack(0, false);
+                } else {
+                    currentTrackIndex = -1;
+                    audioPlayer.src = "";
+                    currentAlbumArt.src = "default_album.jpg";
+                    currentSongTitle.textContent = "Название песни";
+                    currentArtistName.textContent = "Исполнитель";
+                    durationTimeDisplay.textContent = '0:00';
+                    progressBar.style.width = '0%';
+                    currentTimeDisplay.textContent = '0:00';
+                    updatePlayPauseIcons();
                 }
             }
 
@@ -1114,15 +1214,20 @@
                         const musicCard = document.createElement('div');
                         musicCard.classList.add('music-card');
                         musicCard.innerHTML = `
-                            <img src="${song.avatar}" alt="${song.title} обложка">
+                            <div class="music-card-image-wrapper">
+                                <img src="${song.avatar}" alt="${song.title} обложка">
+                                <div class="play-button-overlay" data-index="${index}">
+                                    <img src="play.png" alt="Воспроизвести">
+                                </div>
+                            </div>
                             <div class="song-title">${song.title}</div>
                             <div class="artist-name">${song.artist}</div>
-                            <div class="play-button-overlay">
-                                <img src="play.png" alt="Воспроизвести">
-                            </div>
                         `;
-                        musicCard.addEventListener('click', () => {
-                            loadTrack(index, true);
+                        const playButtonOverlay = musicCard.querySelector('.play-button-overlay');
+                        playButtonOverlay.addEventListener('click', (event) => {
+                            event.stopPropagation();
+                            const trackIndex = parseInt(event.currentTarget.dataset.index);
+                            loadTrack(trackIndex, true);
                         });
                         musicContainer.appendChild(musicCard);
                     });
@@ -1132,7 +1237,10 @@
             }
 
             function loadTrack(index, playImmediately = false) {
-                if (index < 0 || index >= musicData.length) return;
+                if (musicData.length === 0) {
+                    console.warn("Нет доступных треков для загрузки.");
+                    return;
+                }
                 currentTrackIndex = index;
                 const track = musicData[currentTrackIndex];
                 audioPlayer.src = track.link;
@@ -1182,13 +1290,75 @@
             }
 
             function nextTrack() {
-                let nextIndex = (currentTrackIndex + 1) % musicData.length;
-                loadTrack(nextIndex, true);
+                if (musicData.length === 0) return;
+
+                if (repeatMode === 2) { // Repeat one
+                    playTrack();
+                    return;
+                }
+
+                let nextIndex;
+                if (isShuffled) {
+                    let currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
+                    if (currentShuffledIndex === -1) {
+                        // This should not happen if logic is correct, but as fallback
+                        shuffledIndices = generateShuffledIndices(musicData.length);
+                        currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
+                        if (currentShuffledIndex === -1) currentShuffledIndex = 0; // If still not found, just go to first
+                    }
+                    nextIndex = shuffledIndices[(currentShuffledIndex + 1) % musicData.length];
+                } else {
+                    nextIndex = (currentTrackIndex + 1) % musicData.length;
+                }
+
+                if (nextIndex === 0 && repeatMode === 0) { // No repeat and reached end
+                    pauseTrack();
+                    loadTrack(0, false); // Load first track but don't play
+                } else {
+                    loadTrack(nextIndex, true);
+                }
             }
 
             function prevTrack() {
-                let prevIndex = (currentTrackIndex - 1 + musicData.length) % musicData.length;
+                if (musicData.length === 0) return;
+
+                let prevIndex;
+                if (isShuffled) {
+                    let currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
+                    if (currentShuffledIndex === -1) {
+                        shuffledIndices = generateShuffledIndices(musicData.length);
+                        currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
+                        if (currentShuffledIndex === -1) currentShuffledIndex = 0;
+                    }
+                    prevIndex = shuffledIndices[(currentShuffledIndex - 1 + musicData.length) % musicData.length];
+                } else {
+                    prevIndex = (currentTrackIndex - 1 + musicData.length) % musicData.length;
+                }
                 loadTrack(prevIndex, true);
+            }
+
+            function toggleShuffle() {
+                isShuffled = !isShuffled;
+                if (isShuffled) {
+                    shuffleIcon.src = 'shuffle_on.png'; // Assuming you have a 'shuffle_on.png'
+                    shuffledIndices = generateShuffledIndices(musicData.length);
+                } else {
+                    shuffleIcon.src = 'shuffle.png';
+                }
+            }
+
+            function toggleRepeat() {
+                repeatMode = (repeatMode + 1) % 3;
+                if (repeatMode === 0) {
+                    repeatIcon.src = 'repeats.png'; // No repeat
+                    audioPlayer.loop = false;
+                } else if (repeatMode === 1) {
+                    repeatIcon.src = 'repeat.png'; // Repeat all
+                    audioPlayer.loop = false;
+                } else {
+                    repeatIcon.src = 'repeatsa.png'; // Repeat one
+                    audioPlayer.loop = true;
+                }
             }
 
             function updatePlayPauseIcons() {
@@ -1209,6 +1379,8 @@
             playerAlbumPlayPause.addEventListener('click', togglePlayPause);
             prevButton.addEventListener('click', prevTrack);
             nextButton.addEventListener('click', nextTrack);
+            shuffleButton.addEventListener('click', toggleShuffle);
+            repeatButton.addEventListener('click', toggleRepeat);
 
             audioPlayer.addEventListener('timeupdate', () => {
                 if (!isDraggingProgressBar && audioPlayer.duration) {
@@ -1219,7 +1391,7 @@
             });
 
             audioPlayer.addEventListener('loadedmetadata', () => {
-                if (audioPlayer.duration) {
+                if (audioPlayer.duration && !isNaN(audioPlayer.duration)) {
                     durationTimeDisplay.textContent = formatTime(audioPlayer.duration);
                 } else {
                     durationTimeDisplay.textContent = '0:00';
@@ -1229,11 +1401,23 @@
             });
 
             audioPlayer.addEventListener('ended', () => {
-                nextTrack();
+                if (repeatMode === 2) {
+                    playTrack(); // Already handled by audioPlayer.loop = true
+                } else if (repeatMode === 1) {
+                    nextTrack(); // Go to next track in sequence/shuffle
+                } else { // No repeat
+                    if ((isShuffled && shuffledIndices.indexOf(currentTrackIndex) === musicData.length - 1) ||
+                        (!isShuffled && currentTrackIndex === musicData.length - 1)) {
+                        pauseTrack();
+                        loadTrack(0, false); // Go to the beginning of the list without playing
+                    } else {
+                        nextTrack();
+                    }
+                }
             });
 
             progressBarWrapper.addEventListener('mousedown', (e) => {
-                if (!audioPlayer.duration) return;
+                if (!audioPlayer.duration || isNaN(audioPlayer.duration)) return;
 
                 isDraggingProgressBar = true;
                 const wasPlaying = !audioPlayer.paused;
@@ -1300,7 +1484,34 @@
             audioPlayer.volume = volumeSlider.value;
             updateVolumeIcon();
 
-            loadMusic();
+            // JSON upload functionality
+            uploadJsonButton.addEventListener('click', () => {
+                jsonUploadInput.click();
+            });
+
+            jsonUploadInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const parsedData = JSON.parse(e.target.result);
+                            if (Array.isArray(parsedData) && parsedData.every(item => item.title && item.artist && item.avatar && item.link)) {
+                                loadMusic(parsedData);
+                            } else {
+                                alert('Неверный формат JSON файла. Ожидается массив объектов с полями "title", "artist", "avatar", "link".');
+                            }
+                        } catch (error) {
+                            alert('Ошибка чтения JSON файла: ' + error.message);
+                            console.error('Ошибка чтения JSON файла:', error);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            // Load initial music
+            loadMusic(initialMusicData);
         });
     </script>
 </body>
