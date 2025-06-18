@@ -3,1516 +3,1566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="lago.png">
-    <title>dixtem</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <title>ULTIMATE Cookie Clicker</title>
     <style>
-        body {
-            background-color: #17181C;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+        :root {
+            --primary: #FF9800;
+            --primary-dark: #F57C00;
+            --primary-light: #FFE0B2;
+            --secondary: #8BC34A;
+            --secondary-dark: #689F38;
+            --accent: #FF5722;
+            --background: #FFF8F0;
+            --text: #5D4037;
+            --text-light: #8D6E63;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: 'Comfortaa', cursive;
-            overflow-y: scroll;
-            padding-bottom: 100px;
+            padding: 0;
         }
-
-        body::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        body::-webkit-scrollbar-track {
-            background-color: #2F2F2F;
-            border-radius: 0;
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background-color: #555;
-            border-radius: 10px;
-            border: 3px solid #17181C;
-        }
-
-        body::-webkit-scrollbar-thumb:hover {
-            background-color: #777;
-        }
-
+        
         body {
-            scrollbar-width: auto;
-            -ms-overflow-style: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,214,161,0.2) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255,214,161,0.2) 0%, transparent 20%);
         }
-
-        .top-panel {
-            width: 90%;
+        
+        .container {
             max-width: 1200px;
-            background-color: #262626;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--primary-light);
+            margin-bottom: 30px;
         }
-
-        .nav-sections {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
+        
+        .game-title {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .left-panel, .right-nav-panel {
-            display: flex;
-            gap: 15px;
-            background-color: #363636;
-            border-radius: 15px;
-            padding: 10px 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .vertical-divider {
-            width: 2px;
-            height: 40px;
-            background-color: #555;
-            border-radius: 2px;
-            margin: 0 5px;
-        }
-
-        .nav-button {
-            width: 40px;
-            height: 40px;
-            background-color: #1F1F1F;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-button:hover {
-            background-color: #3a3a3a;
-        }
-
-        .nav-button::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
-            background-color: #8C52FF;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(140, 82, 255, 0.7);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
-
-        .nav-button.active::after {
-            opacity: 1;
-        }
-
-        .nav-button img {
-            width: 24px;
-            height: 24px;
-            transition: opacity 0.3s ease;
-            position: absolute;
-        }
-
-        .nav-button .img-default {
-            opacity: 1;
-        }
-
-        .nav-button .img-hover {
-            opacity: 0;
-        }
-
-        .nav-button:hover .img-default {
-            opacity: 0;
-        }
-
-        .nav-button:hover .img-hover {
-            opacity: 1;
-        }
-
-        .nav-button.active .img-default {
-            opacity: 0;
-        }
-        .nav-button.active .img-hover {
-            opacity: 1;
-        }
-
-        .search-container {
-            position: relative;
-            flex-grow: 1;
-            height: 45px;
-            background-color: #1F1F1F;
-            border-radius: 15px;
-            box-shadow: none;
-            display: flex;
-            align-items: center;
-            padding: 0 18px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-        .search-input {
-            flex-grow: 1;
-            padding: 10px 10px 10px 12px;
-            border: none;
-            background: transparent;
-            color: #E0E0E0;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: padding-left 0.3s ease-in-out;
-        }
-
-        .search-input::placeholder {
-            color: #888;
-            transition: opacity 0.3s ease-in-out;
-            opacity: 1;
-        }
-
-        .search-input:focus::placeholder {
-            opacity: 0;
-        }
-
-        .search-input:focus {
-            outline: none;
-        }
-
-        .search-icon-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin-right: 8px;
-            flex-shrink: 0;
-            cursor: pointer;
-        }
-
-        .search-icon {
-            width: 22px;
-            height: 22px;
-            display: block;
-        }
-
-        .tooltip {
-            visibility: hidden;
-            opacity: 0;
-            width: fit-content;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 10px;
-            position: absolute;
-            z-index: 1;
-            top: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: opacity 0.6s ease;
-            white-space: nowrap;
-            font-size: 14px;
-        }
-
-        .search-icon-wrapper:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .photo-button {
-            width: 45px;
-            height: 45px;
-            background-color: #555;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .photo-button:hover {
-            background-color: #666;
-            transform: scale(1.05);
-        }
-
-        .photo-button #profileImage {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            transition: opacity 0.3s ease;
-        }
-
-        .photo-input {
-            display: none;
-        }
-
-        .photo-button .edit-icon-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .photo-button:hover .edit-icon-overlay.no-photo {
-            opacity: 1;
-        }
-
-        .photo-button .edit-icon-overlay img {
-            width: 28px;
-            height: 28px;
-        }
-
-        .photo-button:hover #profileImage.no-photo-selected {
-            opacity: 0;
-        }
-
-        .photo-button.has-photo .edit-icon-overlay {
-            display: none;
-        }
-
-        .photo-button.has-photo #profileImage {
-             opacity: 1;
-        }
-        .photo-button #profileImage.no-photo-selected {
-            opacity: 0;
-        }
-
-        .music-container {
-            width: 90%;
-            max-width: 1200px;
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            gap: 20px;
-            padding-bottom: 20px;
-        }
-
-        .music-card {
-            background-color: #262626;
-            border-radius: 15px;
-            padding: 15px;
+        
+        .stats {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            color: #E0E0E0;
-            width: calc(16.66% - 17px);
-            box-sizing: border-box;
-            min-width: 140px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #3a3a3a;
-        }
-
-        .music-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            border-color: #8C52FF;
-        }
-
-        .music-card img {
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-bottom: 10px;
-            transition: filter 0.3s ease;
-        }
-
-        .music-card .song-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-
-        .music-card .artist-name {
-            font-size: 0.9em;
-            color: #BBBBBB;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-
-        .music-card-image-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .music-card-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: filter 0.3s ease;
-            margin-bottom: 0; /* Override previous margin-bottom */
-        }
-
-        .music-card-image-wrapper .play-button-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none; /* Allows click to pass through to the image wrapper */
-        }
-
-        .music-card-image-wrapper:hover .play-button-overlay {
-            opacity: 1;
-            pointer-events: auto; /* Enable pointer events on hover */
-        }
-
-        .music-card-image-wrapper:hover img {
-            filter: blur(2px);
-        }
-
-        .music-card-image-wrapper .play-button-overlay img {
-            width: 40px;
-            height: 40px;
-            filter: none;
-            transition: transform 0.2s ease;
-            margin: 0;
-        }
-
-        .music-card-image-wrapper .play-button-overlay img:hover {
-            transform: scale(1.1);
-        }
-
-
-        .audio-player-bar {
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            width: 810px;
-            height: 80px;
-            background-color: #262626;
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 20px 0 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            z-index: 2000;
-        }
-
-        .player-left-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-shrink: 0;
-            margin-right: 20px;
-        }
-
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-        }
-
-        .player-info img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .player-info .play-pause-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-        }
-
-        .player-info:hover .play-pause-overlay {
-            opacity: 1;
-        }
-
-        .player-info .play-pause-overlay img {
-            width: 30px;
-            height: 30px;
-            transition: transform 0.2s ease;
-            margin: 0;
-            border-radius: 0;
-        }
-
-        .player-info .play-pause-overlay img:hover {
-            transform: scale(1.1);
-        }
-
-        .song-details {
-            display: flex;
-            flex-direction: column;
-            color: #E0E0E0;
-            min-width: 120px;
-            max-width: 180px;
-        }
-
-        .song-details .current-title {
-            font-weight: bold;
-            font-size: 1em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .song-details .current-artist {
-            font-size: 0.8em;
-            color: #BBBBBB;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .player-center-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-            margin: 0 10px;
+            align-items: flex-end;
             gap: 5px;
-            max-width: 400px;
         }
-
-        .player-controls {
+        
+        .counter {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+        
+        .cps-counter {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+        
+        .main-game {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 5px;
+            gap: 30px;
+            margin-bottom: 40px;
         }
-
-        .player-control-button {
-            background: none;
-            border: none;
+        
+        .cookie-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cookie-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px 0;
             cursor: pointer;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
+            transition: var(--transition);
         }
-
-        #prevButton img {
-            transform: scaleX(-1);
-        }
-
-        .player-control-button img {
-            width: 25px;
-            height: 25px;
-            transition: inherit;
-        }
-
-        .player-control-button:hover {
-            transform: scale(1.1);
-        }
-
-        #prevButton:hover img {
-            transform: scaleX(-1);
-        }
-
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        
+        .cookie {
             width: 100%;
-        }
-
-        .progress-time {
-            color: #BBBBBB;
-            font-size: 0.8em;
-            width: 35px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .progress-bar-wrapper {
-            flex-grow: 1;
-            height: 6px;
-            background-color: #444;
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .progress-bar {
             height: 100%;
-            width: 0%;
-            background-color: #999;
-            border-radius: 3px;
-            transition: none;
-            position: relative;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D7CCC8" stroke="%235D4037" stroke-width="2"/><circle cx="30" cy="30" r="5" fill="%235D4037"/><circle cx="70" cy="30" r="7" fill="%235D4037"/><circle cx="40" cy="60" r="4" fill="%235D4037"/><circle cx="65" cy="65" r="3" fill="%235D4037"/><circle cx="25" cy="50" r="6" fill="%235D4037"/></svg>');
+            background-size: contain;
+            transition: var(--transition);
+            filter: drop-shadow(var(--shadow));
         }
-
-        .progress-bar-thumb {
-            width: 14px;
-            height: 14px;
-            background-color: #999;
-            border-radius: 50%;
+        
+        .cookie:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        .cookie:active {
+            transform: scale(0.95) rotate(-5deg);
+        }
+        
+        .click-effect {
             position: absolute;
-            right: -7px;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            animation: float-up 1s forwards;
             pointer-events: none;
-            opacity: 1;
+            user-select: none;
+            z-index: 10;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
         }
-
-        .volume-container {
+        
+        @keyframes float-up {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+        
+        .upgrades-section {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .upgrades-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--primary-light);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-light);
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: var(--primary-dark);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab:hover:not(.active) {
+            color: var(--text);
+            background-color: rgba(255,152,0,0.1);
+        }
+        
+        .upgrades-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .upgrade {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid var(--primary-light);
+            cursor: pointer;
+        }
+        
+        .upgrade:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        
+        .upgrade:active {
+            transform: translateY(0);
+        }
+        
+        .upgrade.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+        
+        .upgrade-name {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .upgrade-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .upgrade-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+        
+        .upgrade-price {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .upgrade-owned {
+            color: var(--secondary-dark);
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .achievements-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .volume-container img {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .volume-container img:hover {
-            transform: scale(1.1);
-        }
-
-        .volume-slider {
-            -webkit-appearance: none;
-            width: 80px;
-            height: 6px;
-            background: #444;
-            outline: none;
-            border-radius: 3px;
-            transition: opacity .2s;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            background: #999;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        .volume-slider::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            background: #999;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        .upload-button-container {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .upload-button {
-            background-color: #8C52FF;
-            color: #E0E0E0;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-family: 'Comfortaa', cursive;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .upload-button:hover {
-            background-color: #7a42e0;
-            transform: translateY(-2px);
-        }
-
-        .top-panel, .nav-sections, .left-panel, .right-nav-panel {
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 10px;
         }
-
-        .music-container {
-             flex-wrap: wrap;
-             justify-content: flex-start;
-             gap: 20px;
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
         }
-
-        @media (max-width: 1200px) {
-            .music-card {
-                width: calc(20% - 16px);
-            }
-            .audio-player-bar {
-                width: 100%;
-                border-radius: 20px 20px 0 0;
-                justify-content: space-between;
-                padding: 0 20px;
-            }
-            .player-left-section {
-                margin-right: 0;
-            }
-            .player-right-section {
-                margin-left: 0;
-            }
+        
+        .achievement {
+            background: var(--primary-light);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
         }
-
-        @media (max-width: 1024px) {
-            .top-panel {
-                padding: 10px;
-                width: 95%;
-                gap: 10px;
-            }
-
-            .left-panel, .right-nav-panel {
-                padding: 8px 15px;
-                gap: 10px;
-            }
-
-            .search-container {
-                margin: 10px 0;
-                width: calc(100% - 20px);
-                order: 3;
-            }
-
-            .photo-button {
-                margin-top: 0;
-            }
-
-            .music-container {
-                gap: 15px;
-                width: 95%;
-            }
-
-            .music-card {
-                width: calc(25% - 12px);
-                min-width: 130px;
-            }
-            .music-card-image-wrapper {
-                width: 90px;
-                height: 90px;
-            }
-            .music-card-image-wrapper .play-button-overlay img {
-                width: 35px;
-                height: 35px;
-            }
-
-            .audio-player-bar {
-                height: 70px;
-                padding: 0 15px;
-            }
-            .player-info img, .player-info .play-pause-overlay {
-                width: 50px;
-                height: 50px;
-            }
-            .player-info .play-pause-overlay img {
-                width: 25px;
-                height: 25px;
-            }
-            .player-control-button img {
-                width: 22px;
-                height: 22px;
-            }
-            .progress-time {
-                font-size: 0.75em;
-                width: 30px;
-            }
-            .volume-slider {
-                width: 70px;
-            }
-            .song-details {
-                min-width: 100px;
-                max-width: 150px;
-            }
+        
+        .achievement.unlocked {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary-dark);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(139,195,74,0.3);
         }
-
+        
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .prestige-section {
+            background: linear-gradient(135deg, #673AB7, #9C27B0);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .prestige-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .prestige-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .prestige-button {
+            background: white;
+            color: #673AB7;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .prestige-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .prestige-button:active {
+            transform: translateY(0);
+        }
+        
+        .prestige-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .golden-cookie {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FFD54F" stroke="%23F57F17" stroke-width="3"/><circle cx="30" cy="30" r="5" fill="%23F57F17"/><circle cx="70" cy="30" r="7" fill="%23F57F17"/><circle cx="40" cy="60" r="4" fill="%23F57F17"/><circle cx="65" cy="65" r="3" fill="%23F57F17"/><circle cx="25" cy="50" r="6" fill="%23F57F17"/></svg>');
+            background-size: contain;
+            cursor: pointer;
+            animation: pulse 2s infinite, float 5s infinite ease-in-out;
+            z-index: 100;
+            filter: drop-shadow(0 0 10px rgba(255,213,79,0.7));
+            display: none;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .save-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .game-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+        
+        .game-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .game-button:active {
+            transform: translateY(0);
+        }
+        
+        .game-button.secondary {
+            background: var(--text-light);
+        }
+        
+        .game-button.secondary:hover {
+            background: var(--text);
+        }
+        
+        .game-button.warning {
+            background: #F44336;
+        }
+        
+        .game-button.warning:hover {
+            background: #D32F2F;
+        }
+        
+        /* Анимация для особых событий */
+        @keyframes rainbow {
+            0% { color: #FF0000; }
+            14% { color: #FF7F00; }
+            28% { color: #FFFF00; }
+            42% { color: #00FF00; }
+            57% { color: #0000FF; }
+            71% { color: #4B0082; }
+            85% { color: #9400D3; }
+            100% { color: #FF0000; }
+        }
+        
+        .rainbow-text {
+            animation: rainbow 3s linear infinite;
+        }
+        
+        /* Адаптивность */
         @media (max-width: 768px) {
-            .top-panel {
+            .main-game {
                 flex-direction: column;
-                align-items: center;
-                border-bottom-left-radius: 15px;
-                border-bottom-right-radius: 15px;
             }
-
-            .nav-sections {
-                flex-direction: column;
-                width: 100%;
+            
+            .upgrades-container {
+                grid-template-columns: 1fr;
             }
-
-            .left-panel, .right-nav-panel {
-                width: 100%;
-                justify-content: space-around;
-                padding: 8px 5px;
-            }
-
-            .vertical-divider {
-                display: none;
-            }
-
-            .search-container {
-                margin: 10px 0;
-                width: 100%;
-                order: 3;
-            }
-
-            .photo-button {
-                margin-top: 10px;
-                order: 2;
-            }
-
-            .music-card {
-                width: calc(33.33% - 10px);
-                min-width: 120px;
-            }
-            .music-card-image-wrapper {
-                width: 80px;
-                height: 80px;
-            }
-            .music-card-image-wrapper .play-button-overlay img {
-                width: 30px;
-                height: 30px;
-            }
-
-            .audio-player-bar {
-                height: auto;
-                flex-direction: column;
-                padding: 10px 10px;
-                border-radius: 15px 15px 0 0;
-            }
-            .player-left-section, .player-center-section, .player-right-section {
-                width: 100%;
-                justify-content: center;
-                margin: 0;
-                padding: 5px 0;
-            }
-            .song-details {
-                text-align: center;
-                min-width: unset;
-                max-width: unset;
-            }
-            .progress-container {
-                flex-wrap: wrap;
-            }
-            .progress-time {
-                width: auto;
-            }
-            .volume-slider {
-                width: 100px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .top-panel {
-                padding: 8px;
-                border-bottom-left-radius: 10px;
-                border-bottom-right-radius: 10px;
-            }
-
-            .nav-button {
-                width: 35px;
-                height: 35px;
-            }
-
-            .nav-button img {
-                width: 20px;
-                height: 20px;
-            }
-
-            .search-input {
-                font-size: 14px;
-            }
-
-            .search-icon {
-                width: 18px;
-                height: 18px;
-            }
-
-            .photo-button {
-                width: 40px;
-                height: 40px;
-            }
-
-            .music-card {
-                width: calc(50% - 10px);
-                min-width: unset;
-            }
-            .music-card-image-wrapper {
-                width: 70px;
-                height: 70px;
-            }
-            .music-card-image-wrapper .play-button-overlay img {
-                width: 25px;
-                height: 25px;
-            }
-
-            .audio-player-bar {
-                height: auto;
-                padding: 5px;
-                border-radius: 10px 10px 0 0;
-            }
-            .player-info img, .player-info .play-pause-overlay {
-                width: 40px;
-                height: 40px;
-            }
-            .player-info .play-pause-overlay img {
-                width: 20px;
-                height: 20px;
-            }
-            .player-control-button img {
-                width: 20px;
-                height: 20px;
-            }
-            .volume-slider {
-                width: 70px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .music-card {
-                width: calc(100% - 10px);
-            }
-            .audio-player-bar {
-                height: auto;
-                flex-direction: column;
-                padding-bottom: 10px;
-            }
-            .player-left-section, .player-center-section, .player-right-section {
-                width: 100%;
-                justify-content: center;
-                margin-top: 5px;
-            }
-            .player-info img, .player-info .play-pause-overlay {
-                width: 30px;
-                height: 30px;
-            }
-            .player-info .play-pause-overlay img {
-                width: 18px;
-                height: 18px;
-            }
-            .player-control-button img {
-                width: 18px;
-                height: 18px;
-            }
-            .volume-slider {
-                width: 80px;
+            
+            .achievements-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="top-panel">
-        <div class="nav-sections">
-            <div class="left-panel">
-                <div class="nav-button" data-button="home">
-                    <img src="home.png" alt="Иконка Домой" class="img-default">
-                    <img src="homes.png" alt="Иконка Домой при наведении" class="img-hover">
-                    <span class="tooltip">Домой</span>
-                </div>
-                <div class="nav-button" data-button="brush">
-                    <img src="brush.png" alt="Иконка Кисть" class="img-default">
-                    <img src="brushs.png" alt="Иконка Кисть при наведении" class="img-hover">
-                    <span class="tooltip">Кисть</span>
-                </div>
-                <div class="nav-button" data-button="library">
-                    <img src="lib.png" alt="Иконка Библиотека" class="img-default">
-                    <img src="libs.png" alt="Иконка Библиотека при наведении" class="img-hover">
-                    <span class="tooltip">Библиотека</span>
-                </div>
+    <div class="container">
+        <header>
+            <h1 class="game-title">ULTIMATE COOKIE CLICKER</h1>
+            <div class="stats">
+                <div class="counter">Печенек: <span id="cookies">0</span></div>
+                <div class="cps-counter">В секунду: <span id="cps">0</span></div>
             </div>
-
-            <div class="vertical-divider"></div>
-
-            <div class="right-nav-panel">
-                <div class="nav-button" data-button="add">
-                    <img src="mail.png" alt="Иконка Добавить" class="img-default">
-                    <img src="mails.png" alt="Иконка Добавить при наведении" class="img-hover">
-                    <span class="tooltip">Добавить</span>
+        </header>
+        
+        <div class="main-game">
+            <div class="cookie-section">
+                <div class="cookie-container" id="cookie-container">
+                    <div class="cookie" id="cookie"></div>
                 </div>
-                <div class="nav-button" data-button="settings">
-                    <img src="profile.png" alt="Иконка Настройки" class="img-default">
-                    <img src="profiles.png" alt="Иконка Настройки при наведении" class="img-hover">
-                    <span class="tooltip">Настройки</span>
+                <div id="click-multiplier">За клик: <span id="click-value">1</span></div>
+            </div>
+            
+            <div class="upgrades-section">
+                <div class="upgrades-tabs">
+                    <div class="tab active" data-tab="producers">Производство</div>
+                    <div class="tab" data-tab="click">Клик</div>
+                    <div class="tab" data-tab="prestige">Престиж</div>
                 </div>
-                <div class="nav-button" data-button="message">
-                    <img src="setting.png" alt="Иконка Сообщения" class="img-default">
-                    <img src="settings.png" alt="Иконка Сообщения при наведении" class="img-hover">
-                    <span class="tooltip">Сообщения</span>
+                
+                <div class="upgrades-container" id="producers-tab">
+                    <!-- Производители будут добавлены через JS -->
+                </div>
+                
+                <div class="upgrades-container" id="click-tab" style="display:none;">
+                    <!-- Улучшения клика будут добавлены через JS -->
+                </div>
+                
+                <div class="upgrades-container" id="prestige-tab" style="display:none;">
+                    <!-- Престижные улучшения будут добавлены через JS -->
                 </div>
             </div>
         </div>
-
-        <div class="search-container">
-            <div class="search-icon-wrapper">
-                <img src="search.png" alt="Иконка Поиск" class="search-icon">
-                <span class="tooltip">Поиск</span>
-            </div>
-            <input type="text" class="search-input" placeholder="Искать музыку..">
-        </div>
-
-        <div class="photo-button" id="photoButton">
-            <img id="profileImage" src="" alt="Изображение профиля">
-            <input type="file" id="photoInput" accept="image/*" class="photo-input">
-            <div class="edit-icon-overlay">
-                <img src="edit.png" alt="Иконка редактирования">
+        
+        <div class="achievements-section">
+            <h2 class="section-title">🏆 Достижения</h2>
+            <div class="achievements-grid" id="achievements-container">
+                <!-- Достижения будут добавлены через JS -->
             </div>
         </div>
-    </div>
-
-    <div class="upload-button-container">
-        <input type="file" id="jsonUploadInput" accept=".json" style="display: none;">
-        <button class="upload-button" id="uploadJsonButton">Загрузить JSON с треками</button>
-    </div>
-
-    <div class="music-container" id="musicContainer">
-    </div>
-
-    <div class="audio-player-bar">
-        <audio id="audioPlayer" src=""></audio>
-        <div class="player-left-section">
-            <div class="player-info">
-                <img src="default_album.jpg" alt="Обложка альбома" id="currentAlbumArt">
-                <div class="play-pause-overlay" id="playerAlbumPlayPause">
-                    <img src="play.png" alt="Воспроизвести/Пауза" id="playerAlbumPlayPauseIcon">
-                </div>
-                <div class="song-details">
-                    <div class="current-title" id="currentSongTitle">Название песни</div>
-                    <div class="current-artist" id="currentArtistName">Исполнитель</div>
-                </div>
+        
+        <div class="prestige-section">
+            <h2 class="prestige-title">⭐ Престиж</h2>
+            <div class="prestige-info">
+                <div>Текущий уровень: <span id="prestige-level">0</span></div>
+                <div>Бонус: x<span id="prestige-bonus">1</span></div>
             </div>
+            <div>Престижных очков: <span id="prestige-points">0</span></div>
+            <div>Следующий престиж: <span id="next-prestige">1,000,000</span> печенек</div>
+            <button class="prestige-button" id="prestige-button" disabled>Престиж!</button>
         </div>
-
-        <div class="player-center-section">
-            <div class="player-controls">
-                <button class="player-control-button" id="shuffleButton">
-                    <img src="shuffle.png" alt="Перемешать" id="shuffleIcon">
-                </button>
-                <button class="player-control-button" id="prevButton">
-                    <img src="sled.png" alt="Предыдущий трек">
-                </button>
-                <button class="player-control-button" id="playPauseButton">
-                    <img src="play.png" alt="Воспроизвести/Пауза" id="mainPlayPauseIcon">
-                </button>
-                <button class="player-control-button" id="nextButton">
-                    <img src="sled.png" alt="Следующий трек">
-                </button>
-                <button class="player-control-button" id="repeatButton">
-                    <img src="repeats.png" alt="Повтор" id="repeatIcon">
-                </button>
-            </div>
-            <div class="progress-container">
-                <div class="progress-time" id="currentTime">0:00</div>
-                <div class="progress-bar-wrapper" id="progressBarWrapper">
-                    <div class="progress-bar" id="progressBar">
-                        <div class="progress-bar-thumb"></div>
-                    </div>
-                </div>
-                <div class="progress-time" id="durationTime">0:00</div>
-            </div>
-        </div>
-
-        <div class="player-right-section">
-            <div class="volume-container">
-                <img src="zvyk.png" alt="Регулятор громкости" id="volumeIcon">
-                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
+        
+        <div class="save-buttons">
+            <button class="game-button" id="save-btn">Сохранить</button>
+            <button class="game-button secondary" id="load-btn">Загрузить</button>
+            <button class="game-button warning" id="reset-btn">Сбросить</button>
         </div>
     </div>
-
+    
+    <div class="golden-cookie" id="golden-cookie"></div>
+    
+    <div class="notification" id="notification"></div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navButtons = document.querySelectorAll('.nav-button');
-            const photoButton = document.getElementById('photoButton');
-            const photoInput = document.getElementById('photoInput');
-            const profileImage = document.getElementById('profileImage');
-            const editIconOverlay = photoButton.querySelector('.edit-icon-overlay');
-            const musicContainer = document.getElementById('musicContainer');
-
-            const audioPlayer = document.getElementById('audioPlayer');
-            const playPauseButton = document.getElementById('playPauseButton');
-            const mainPlayPauseIcon = document.getElementById('mainPlayPauseIcon');
-            const prevButton = document.getElementById('prevButton');
-            const nextButton = document.getElementById('nextButton');
-            const shuffleButton = document.getElementById('shuffleButton');
-            const shuffleIcon = document.getElementById('shuffleIcon');
-            const repeatButton = document.getElementById('repeatButton');
-            const repeatIcon = document.getElementById('repeatIcon');
-            const progressBar = document.getElementById('progressBar');
-            const progressBarWrapper = document.getElementById('progressBarWrapper');
-            const progressBarThumb = document.querySelector('.progress-bar-thumb');
-            const currentTimeDisplay = document.getElementById('currentTime');
-            const durationTimeDisplay = document.getElementById('durationTime');
-            const volumeSlider = document.getElementById('volumeSlider');
-            const volumeIcon = document.getElementById('volumeIcon');
-            const currentAlbumArt = document.getElementById('currentAlbumArt');
-            const currentSongTitle = document.getElementById('currentSongTitle');
-            const currentArtistName = document.getElementById('currentArtistName');
-
-            const playerAlbumPlayPause = document.getElementById('playerAlbumPlayPause');
-            const playerAlbumPlayPauseIcon = document.getElementById('playerAlbumPlayPauseIcon');
-
-            const uploadJsonButton = document.getElementById('uploadJsonButton');
-            const jsonUploadInput = document.getElementById('jsonUploadInput');
-
-            let musicData = [];
-            let currentTrackIndex = -1;
-            let isDraggingProgressBar = false;
-            let lastVolume = audioPlayer.volume;
-            let shuffledIndices = [];
-            let isShuffled = false;
-            // 0: no repeat, 1: repeat all, 2: repeat one
-            let repeatMode = 0;
-
-            const initialMusicData = [
-                {
-                    "title": "akisedd - milk cassette x.mp3 x fight club",
-                    "artist": "akisedd",
-                    "avatar": "pr.png",
-                    "link": "akisedd - milk cassette x.mp3 x fight club.mp3"
-                }
-            ];
-
-            function formatTime(seconds) {
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = Math.floor(seconds % 60);
-                return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        // Игровые переменные
+        let cookies = 0;
+        let cookiesPerSecond = 0;
+        let cookiesPerClick = 1;
+        let totalCookiesClicked = 0;
+        let totalCookiesProduced = 0;
+        let prestigeLevel = 0;
+        let prestigePoints = 0;
+        let prestigeBonus = 1;
+        let goldenCookiesClicked = 0;
+        let gameVersion = "1.0.0";
+        
+        // Состояние игры
+        let gameState = {
+            lastUpdate: Date.now(),
+            cookies: 0,
+            upgrades: {},
+            achievements: [],
+            stats: {},
+            prestige: {
+                level: 0,
+                points: 0,
+                bonus: 1
             }
-
-            const initialActiveButton = document.querySelector('.nav-button[data-button="home"]');
-            if (initialActiveButton) {
-                initialActiveButton.classList.add('active');
+        };
+        
+        // Улучшения производства
+        const producers = {
+            cursor: {
+                name: "Курсор",
+                description: "Автоматически кликает по печеньке",
+                basePrice: 15,
+                price: 15,
+                owned: 0,
+                cps: 0.1,
+                priceIncrease: 1.15,
+                unlockAt: 0,
+                icon: "🖱️"
+            },
+            grandma: {
+                name: "Бабушка",
+                description: "Печёт печенье для вас",
+                basePrice: 100,
+                price: 100,
+                owned: 0,
+                cps: 1,
+                priceIncrease: 1.15,
+                unlockAt: 10,
+                icon: "👵"
+            },
+            farm: {
+                name: "Ферма",
+                description: "Выращивает пшеницу для печенья",
+                basePrice: 1100,
+                price: 1100,
+                owned: 0,
+                cps: 8,
+                priceIncrease: 1.15,
+                unlockAt: 50,
+                icon: "🌾"
+            },
+            mine: {
+                name: "Шахта",
+                description: "Добывает сахар и минералы",
+                basePrice: 12000,
+                price: 12000,
+                owned: 0,
+                cps: 47,
+                priceIncrease: 1.15,
+                unlockAt: 200,
+                icon: "⛏️"
+            },
+            factory: {
+                name: "Фабрика",
+                description: "Массовое производство печенья",
+                basePrice: 130000,
+                price: 130000,
+                owned: 0,
+                cps: 260,
+                priceIncrease: 1.15,
+                unlockAt: 1000,
+                icon: "🏭"
+            },
+            bank: {
+                name: "Банк",
+                description: "Производит печенье из процентов",
+                basePrice: 1400000,
+                price: 1400000,
+                owned: 0,
+                cps: 1400,
+                priceIncrease: 1.15,
+                unlockAt: 5000,
+                icon: "🏦"
+            },
+            temple: {
+                name: "Храм",
+                description: "Боги дарят вам печенье",
+                basePrice: 20000000,
+                price: 20000000,
+                owned: 0,
+                cps: 7800,
+                priceIncrease: 1.15,
+                unlockAt: 20000,
+                icon: "🛕"
+            },
+            portal: {
+                name: "Портал",
+                description: "Печенье из других измерений",
+                basePrice: 330000000,
+                price: 330000000,
+                owned: 0,
+                cps: 44000,
+                priceIncrease: 1.15,
+                unlockAt: 100000,
+                icon: "🌀"
             }
-
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    navButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
-
-            function updatePhotoButtonState() {
-                const savedImage = localStorage.getItem('profilePicture');
-                if (savedImage) {
-                    profileImage.src = savedImage;
-                    photoButton.classList.add('has-photo');
-                    profileImage.classList.remove('no-photo-selected');
-                    editIconOverlay.classList.remove('no-photo');
-                } else {
-                    profileImage.src = '';
-                    photoButton.classList.remove('has-photo');
-                    profileImage.classList.add('no-photo-selected');
-                    editIconOverlay.classList.add('no-photo');
-                }
+        };
+        
+        // Улучшения клика
+        const clickUpgrades = {
+            betterCursor: {
+                name: "Улучшенный курсор",
+                description: "Увеличивает печенье за клик на 0.1",
+                basePrice: 100,
+                price: 100,
+                owned: 0,
+                bonus: 0.1,
+                priceIncrease: 1.5,
+                max: 10,
+                icon: "🖱️✨"
+            },
+            reinforcedClick: {
+                name: "Усиленный клик",
+                description: "Увеличивает печенье за клик на 1",
+                basePrice: 500,
+                price: 500,
+                owned: 0,
+                bonus: 1,
+                priceIncrease: 1.8,
+                max: 5,
+                icon: "💪"
+            },
+            platinumClick: {
+                name: "Платиновый клик",
+                description: "Увеличивает печенье за клик на 5",
+                basePrice: 10000,
+                price: 10000,
+                owned: 0,
+                bonus: 5,
+                priceIncrease: 2,
+                max: 3,
+                icon: "👑"
+            },
+            cosmicClick: {
+                name: "Космический клик",
+                description: "Увеличивает печенье за клик на 50",
+                basePrice: 1000000,
+                price: 1000000,
+                owned: 0,
+                bonus: 50,
+                priceIncrease: 2.5,
+                max: 1,
+                icon: "🚀"
             }
-            updatePhotoButtonState();
-            photoButton.addEventListener('click', () => { photoInput.click(); });
-            photoInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        localStorage.setItem('profilePicture', e.target.result);
-                        updatePhotoButtonState();
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    localStorage.removeItem('profilePicture');
-                    updatePhotoButtonState();
-                }
-            });
-
-            function generateShuffledIndices(length) {
-                const arr = Array.from({ length }, (_, i) => i);
-                for (let i = arr.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
-                }
-                return arr;
+        };
+        
+        // Престижные улучшения
+        const prestigeUpgrades = {
+            legacy: {
+                name: "Наследие",
+                description: "Увеличивает базовую эффективность всех производителей на 1%",
+                basePrice: 1,
+                price: 1,
+                owned: 0,
+                bonus: 0.01,
+                priceIncrease: 1.2,
+                max: 100,
+                icon: "🏛️"
+            },
+            goldenLuck: {
+                name: "Золотая удача",
+                description: "Увеличивает шанс появления золотых печенек на 1%",
+                basePrice: 5,
+                price: 5,
+                owned: 0,
+                bonus: 0.01,
+                priceIncrease: 1.3,
+                max: 20,
+                icon: "🍀"
+            },
+            cookieMaster: {
+                name: "Мастер печенья",
+                description: "Увеличивает все печенье за клик на 1%",
+                basePrice: 10,
+                price: 10,
+                owned: 0,
+                bonus: 0.01,
+                priceIncrease: 1.4,
+                max: 50,
+                icon: "👨‍🍳"
             }
-
-            function loadMusic(data) {
-                musicData = data;
-                if (isShuffled) {
-                    shuffledIndices = generateShuffledIndices(musicData.length);
-                }
-                displayMusic(musicData);
-                if (musicData.length > 0) {
-                    loadTrack(0, false);
-                } else {
-                    currentTrackIndex = -1;
-                    audioPlayer.src = "";
-                    currentAlbumArt.src = "default_album.jpg";
-                    currentSongTitle.textContent = "Название песни";
-                    currentArtistName.textContent = "Исполнитель";
-                    durationTimeDisplay.textContent = '0:00';
-                    progressBar.style.width = '0%';
-                    currentTimeDisplay.textContent = '0:00';
-                    updatePlayPauseIcons();
-                }
-            }
-
-            function displayMusic(data) {
-                musicContainer.innerHTML = '';
-                if (data && data.length > 0) {
-                    data.forEach((song, index) => {
-                        const musicCard = document.createElement('div');
-                        musicCard.classList.add('music-card');
-                        musicCard.innerHTML = `
-                            <div class="music-card-image-wrapper">
-                                <img src="${song.avatar}" alt="${song.title} обложка">
-                                <div class="play-button-overlay" data-index="${index}">
-                                    <img src="play.png" alt="Воспроизвести">
-                                </div>
-                            </div>
-                            <div class="song-title">${song.title}</div>
-                            <div class="artist-name">${song.artist}</div>
-                        `;
-                        const playButtonOverlay = musicCard.querySelector('.play-button-overlay');
-                        playButtonOverlay.addEventListener('click', (event) => {
-                            event.stopPropagation();
-                            const trackIndex = parseInt(event.currentTarget.dataset.index);
-                            loadTrack(trackIndex, true);
-                        });
-                        musicContainer.appendChild(musicCard);
-                    });
-                } else {
-                    musicContainer.innerHTML = '<p style="color: #E0E0E0; text-align: center; width: 100%;">В плейлисте пока нет песен.</p>';
-                }
-            }
-
-            function loadTrack(index, playImmediately = false) {
-                if (musicData.length === 0) {
-                    console.warn("Нет доступных треков для загрузки.");
-                    return;
-                }
-                currentTrackIndex = index;
-                const track = musicData[currentTrackIndex];
-                audioPlayer.src = track.link;
-                currentAlbumArt.src = track.avatar;
-                currentSongTitle.textContent = track.title;
-                currentArtistName.textContent = track.artist;
-                audioPlayer.currentTime = 0;
-                progressBar.style.width = '0%';
-                currentTimeDisplay.textContent = '0:00';
-
-                audioPlayer.load();
-
-                if (playImmediately) {
-                    playTrack();
-                } else {
-                    updatePlayPauseIcons();
-                }
-            }
-
-            function playTrack() {
-                if (audioPlayer.src === "" || currentTrackIndex === -1) {
-                    if (musicData.length > 0) {
-                        loadTrack(0, true);
-                        return;
-                    } else {
-                        console.warn("Нет доступных треков для воспроизведения.");
-                        return;
-                    }
-                }
-                audioPlayer.play().catch(error => {
-                    console.error("Ошибка воспроизведения:", error);
-                });
-                updatePlayPauseIcons();
-            }
-
-            function pauseTrack() {
-                audioPlayer.pause();
-                updatePlayPauseIcons();
-            }
-
-            function togglePlayPause() {
-                if (audioPlayer.paused) {
-                    playTrack();
-                } else {
-                    pauseTrack();
-                }
-            }
-
-            function nextTrack() {
-                if (musicData.length === 0) return;
-
-                if (repeatMode === 2) { // Repeat one
-                    playTrack();
-                    return;
-                }
-
-                let nextIndex;
-                if (isShuffled) {
-                    let currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
-                    if (currentShuffledIndex === -1) {
-                        // This should not happen if logic is correct, but as fallback
-                        shuffledIndices = generateShuffledIndices(musicData.length);
-                        currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
-                        if (currentShuffledIndex === -1) currentShuffledIndex = 0; // If still not found, just go to first
-                    }
-                    nextIndex = shuffledIndices[(currentShuffledIndex + 1) % musicData.length];
-                } else {
-                    nextIndex = (currentTrackIndex + 1) % musicData.length;
-                }
-
-                if (nextIndex === 0 && repeatMode === 0) { // No repeat and reached end
-                    pauseTrack();
-                    loadTrack(0, false); // Load first track but don't play
-                } else {
-                    loadTrack(nextIndex, true);
-                }
-            }
-
-            function prevTrack() {
-                if (musicData.length === 0) return;
-
-                let prevIndex;
-                if (isShuffled) {
-                    let currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
-                    if (currentShuffledIndex === -1) {
-                        shuffledIndices = generateShuffledIndices(musicData.length);
-                        currentShuffledIndex = shuffledIndices.indexOf(currentTrackIndex);
-                        if (currentShuffledIndex === -1) currentShuffledIndex = 0;
-                    }
-                    prevIndex = shuffledIndices[(currentShuffledIndex - 1 + musicData.length) % musicData.length];
-                } else {
-                    prevIndex = (currentTrackIndex - 1 + musicData.length) % musicData.length;
-                }
-                loadTrack(prevIndex, true);
-            }
-
-            function toggleShuffle() {
-                isShuffled = !isShuffled;
-                if (isShuffled) {
-                    shuffleIcon.src = 'shuffle_on.png'; // Assuming you have a 'shuffle_on.png'
-                    shuffledIndices = generateShuffledIndices(musicData.length);
-                } else {
-                    shuffleIcon.src = 'shuffle.png';
-                }
-            }
-
-            function toggleRepeat() {
-                repeatMode = (repeatMode + 1) % 3;
-                if (repeatMode === 0) {
-                    repeatIcon.src = 'repeats.png'; // No repeat
-                    audioPlayer.loop = false;
-                } else if (repeatMode === 1) {
-                    repeatIcon.src = 'repeat.png'; // Repeat all
-                    audioPlayer.loop = false;
-                } else {
-                    repeatIcon.src = 'repeatsa.png'; // Repeat one
-                    audioPlayer.loop = true;
-                }
-            }
-
-            function updatePlayPauseIcons() {
-                const iconSrc = audioPlayer.paused ? 'play.png' : 'pause.png';
-                mainPlayPauseIcon.src = iconSrc;
-                playerAlbumPlayPauseIcon.src = iconSrc;
-            }
-
-            function updateVolumeIcon() {
-                if (audioPlayer.volume === 0) {
-                    volumeIcon.src = 'mute.png';
-                } else {
-                    volumeIcon.src = 'zvyk.png';
-                }
-            }
-
-            playPauseButton.addEventListener('click', togglePlayPause);
-            playerAlbumPlayPause.addEventListener('click', togglePlayPause);
-            prevButton.addEventListener('click', prevTrack);
-            nextButton.addEventListener('click', nextTrack);
-            shuffleButton.addEventListener('click', toggleShuffle);
-            repeatButton.addEventListener('click', toggleRepeat);
-
-            audioPlayer.addEventListener('timeupdate', () => {
-                if (!isDraggingProgressBar && audioPlayer.duration) {
-                    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                    progressBar.style.width = `${progress}%`;
-                    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
-                }
-            });
-
-            audioPlayer.addEventListener('loadedmetadata', () => {
-                if (audioPlayer.duration && !isNaN(audioPlayer.duration)) {
-                    durationTimeDisplay.textContent = formatTime(audioPlayer.duration);
-                } else {
-                    durationTimeDisplay.textContent = '0:00';
-                }
-                updatePlayPauseIcons();
-                updateVolumeIcon();
-            });
-
-            audioPlayer.addEventListener('ended', () => {
-                if (repeatMode === 2) {
-                    playTrack(); // Already handled by audioPlayer.loop = true
-                } else if (repeatMode === 1) {
-                    nextTrack(); // Go to next track in sequence/shuffle
-                } else { // No repeat
-                    if ((isShuffled && shuffledIndices.indexOf(currentTrackIndex) === musicData.length - 1) ||
-                        (!isShuffled && currentTrackIndex === musicData.length - 1)) {
-                        pauseTrack();
-                        loadTrack(0, false); // Go to the beginning of the list without playing
-                    } else {
-                        nextTrack();
-                    }
-                }
-            });
-
-            progressBarWrapper.addEventListener('mousedown', (e) => {
-                if (!audioPlayer.duration || isNaN(audioPlayer.duration)) return;
-
-                isDraggingProgressBar = true;
-                const wasPlaying = !audioPlayer.paused;
-
-                if (wasPlaying) {
-                    audioPlayer.pause();
-                }
-
-                const updateProgress = (event) => {
-                    const rect = progressBarWrapper.getBoundingClientRect();
-                    let clientX = event.clientX;
-
-                    if (clientX < rect.left) clientX = rect.left;
-                    if (clientX > rect.right) clientX = rect.right;
-
-                    const clickX = clientX - rect.left;
-                    const width = rect.width;
-                    const percent = clickX / width;
-                    
-                    audioPlayer.currentTime = audioPlayer.duration * percent;
-                    progressBar.style.width = `${percent * 100}%`;
-                    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
-                };
-
-                updateProgress(e);
-
-                const handleMouseUp = () => {
-                    isDraggingProgressBar = false;
-                    if (wasPlaying) {
-                        audioPlayer.play().catch(e => console.error("Play error:", e));
-                    }
-                    document.removeEventListener('mousemove', updateProgress);
-                    document.removeEventListener('mouseup', handleMouseUp);
-                };
-
-                document.addEventListener('mousemove', updateProgress);
-                document.addEventListener('mouseup', handleMouseUp);
-            });
-
-            audioPlayer.addEventListener('seeked', () => {
-                if (!isDraggingProgressBar && audioPlayer.duration) {
-                    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                    progressBar.style.width = `${progress}%`;
-                }
-            });
-
-            volumeSlider.addEventListener('input', () => {
-                audioPlayer.volume = volumeSlider.value;
-                updateVolumeIcon();
-            });
-
-            volumeIcon.addEventListener('click', () => {
-                if (audioPlayer.volume === 0) {
-                    audioPlayer.volume = lastVolume > 0 ? lastVolume : 0.7;
-                    volumeSlider.value = audioPlayer.volume;
-                } else {
-                    lastVolume = audioPlayer.volume;
-                    volumeSlider.value = 0;
-                    audioPlayer.volume = 0;
-                }
-                updateVolumeIcon();
+        };
+        
+        // Достижения
+        const achievements = [
+            { id: "first-cookie", name: "Первое печенье", description: "Кликните по печеньке 1 раз", threshold: 1, icon: "🍪" },
+            { id: "hundred-cookies", name: "100 печенек", description: "Соберите 100 печенек", threshold: 100, icon: "💯" },
+            { id: "thousand-cookies", name: "1,000 печенек", description: "Соберите 1,000 печенек", threshold: 1000, icon: "🔢" },
+            { id: "million-cookies", name: "Миллионер", description: "Соберите 1,000,000 печенек", threshold: 1000000, icon: "💰" },
+            { id: "first-producer", name: "Первый производитель", description: "Купите первого производителя", threshold: 1, check: () => Object.values(producers).some(p => p.owned > 0), icon: "🏭" },
+            { id: "cookie-farmer", name: "Фермер печенек", description: "Купите 10 ферм", threshold: 10, check: () => producers.farm.owned >= 10, icon: "👨‍🌾" },
+            { id: "golden-cookie", name: "Золотоискатель", description: "Кликните по золотому печенью", threshold: 1, check: () => goldenCookiesClicked > 0, icon: "🌟" },
+            { id: "prestige", name: "Престиж", description: "Пройдите первый престиж", threshold: 1, check: () => prestigeLevel > 0, icon: "⭐" },
+            { id: "click-master", name: "Мастер клика", description: "Сделайте 1,000 кликов", threshold: 1000, check: () => totalCookiesClicked >= 1000, icon: "👆" },
+            { id: "idle-player", name: "Игрок без дела", description: "Получите 10,000 печенек без кликов", threshold: 10000, check: () => totalCookiesProduced >= 10000 && totalCookiesClicked === 0, hidden: true, icon: "😴" }
+        ];
+        
+        // Инициализация игры
+        function initGame() {
+            loadGame();
+            setupUI();
+            updateDisplay();
+            
+            // Обработчики событий
+            document.getElementById('cookie').addEventListener('click', clickCookie);
+            document.getElementById('save-btn').addEventListener('click', saveGame);
+            document.getElementById('load-btn').addEventListener('click', loadGame);
+            document.getElementById('reset-btn').addEventListener('click', resetGame);
+            document.getElementById('prestige-button').addEventListener('click', doPrestige);
+            
+            // Табы
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', switchTab);
             });
             
-            audioPlayer.volume = volumeSlider.value;
-            updateVolumeIcon();
-
-            // JSON upload functionality
-            uploadJsonButton.addEventListener('click', () => {
-                jsonUploadInput.click();
+            // Игровой цикл
+            setInterval(gameLoop, 1000);
+            
+            // Золотые печенья
+            setInterval(spawnGoldenCookie, 30000);
+            
+            // Автосохранение
+            setInterval(autoSave, 30000);
+            
+            // Восстановление оффлайн-прогресса
+            calculateOfflineProgress();
+            
+            // Уведомление о загрузке
+            showNotification("Игра загружена! 🎮");
+        }
+        
+        // Настройка UI
+        function setupUI() {
+            // Производители
+            const producersTab = document.getElementById('producers-tab');
+            for (const [id, producer] of Object.entries(producers)) {
+                producersTab.appendChild(createUpgradeElement(id, producer));
+            }
+            
+            // Улучшения клика
+            const clickTab = document.getElementById('click-tab');
+            for (const [id, upgrade] of Object.entries(clickUpgrades)) {
+                clickTab.appendChild(createUpgradeElement(id, upgrade));
+            }
+            
+            // Престижные улучшения
+            const prestigeTab = document.getElementById('prestige-tab');
+            for (const [id, upgrade] of Object.entries(prestigeUpgrades)) {
+                prestigeTab.appendChild(createUpgradeElement(id, upgrade));
+            }
+            
+            // Достижения
+            const achievementsContainer = document.getElementById('achievements-container');
+            achievements.forEach(achievement => {
+                achievementsContainer.appendChild(createAchievementElement(achievement));
             });
-
-            jsonUploadInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        try {
-                            const parsedData = JSON.parse(e.target.result);
-                            if (Array.isArray(parsedData) && parsedData.every(item => item.title && item.artist && item.avatar && item.link)) {
-                                loadMusic(parsedData);
-                            } else {
-                                alert('Неверный формат JSON файла. Ожидается массив объектов с полями "title", "artist", "avatar", "link".');
-                            }
-                        } catch (error) {
-                            alert('Ошибка чтения JSON файла: ' + error.message);
-                            console.error('Ошибка чтения JSON файла:', error);
-                        }
-                    };
-                    reader.readAsText(file);
+        }
+        
+        // Создание элемента улучшения
+        function createUpgradeElement(id, upgrade) {
+            const element = document.createElement('div');
+            element.className = 'upgrade';
+            element.id = `upgrade-${id}`;
+            element.innerHTML = `
+                <div class="upgrade-name">
+                    <span>${upgrade.icon || '✨'} ${upgrade.name}</span>
+                    <span class="upgrade-owned">${upgrade.owned || 0}</span>
+                </div>
+                <div class="upgrade-description">${upgrade.description}</div>
+                <div class="upgrade-stats">
+                    <span class="upgrade-price">Цена: ${formatNumber(upgrade.price)}</span>
+                </div>
+                ${upgrade.max ? `<div class="progress-bar"><div class="progress-fill" style="width: ${(upgrade.owned / upgrade.max) * 100}%"></div></div>` : ''}
+            `;
+            element.addEventListener('click', () => buyUpgrade(id, upgrade.type || 'producer'));
+            return element;
+        }
+        
+        // Создание элемента достижения
+        function createAchievementElement(achievement) {
+            const element = document.createElement('div');
+            element.className = 'achievement';
+            element.id = `achievement-${achievement.id}`;
+            if (achievement.hidden) element.style.display = 'none';
+            element.innerHTML = `
+                <div class="achievement-icon">${achievement.icon}</div>
+                <div class="achievement-name">${achievement.name}</div>
+                <div class="achievement-description">${achievement.description}</div>
+            `;
+            return element;
+        }
+        
+        // Переключение табов
+        function switchTab(e) {
+            const tabId = e.target.dataset.tab;
+            
+            // Обновляем активный таб
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            e.target.classList.add('active');
+            
+            // Показываем соответствующий контейнер
+            document.querySelectorAll('.upgrades-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.getElementById(`${tabId}-tab`).style.display = 'grid';
+        }
+        
+        // Игровой цикл
+        function gameLoop() {
+            // Добавляем печеньки от производителей
+            const produced = cookiesPerSecond * prestigeBonus;
+            addCookies(produced);
+            totalCookiesProduced += produced;
+            
+            // Обновляем отображение
+            updateDisplay();
+            
+            // Проверяем достижения
+            checkAchievements();
+            
+            // Проверяем доступность престижа
+            checkPrestige();
+        }
+        
+        // Клик по печеньке
+        function clickCookie(e) {
+            // Позиция клика
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Создаем эффект
+            createClickEffect(x, y, 1 + getClickBonus());
+            
+            // Добавляем печеньки
+            addCookies(1 + getClickBonus());
+            totalCookiesClicked++;
+        }
+        
+        // Создание эффекта клика
+        function createClickEffect(x, y, amount) {
+            const clickEffect = document.createElement('div');
+            clickEffect.className = 'click-effect';
+            clickEffect.textContent = `+${formatNumber(amount)}`;
+            clickEffect.style.left = `${x}px`;
+            clickEffect.style.top = `${y}px`;
+            document.getElementById('cookie-container').appendChild(clickEffect);
+            
+            // Удаляем эффект после анимации
+            setTimeout(() => {
+                clickEffect.remove();
+            }, 1000);
+            
+            // Анимация печеньки
+            document.getElementById('cookie').style.transform = 'scale(0.95) rotate(-5deg)';
+            setTimeout(() => {
+                document.getElementById('cookie').style.transform = 'scale(1) rotate(0deg)';
+            }, 100);
+        }
+        
+        // Бонус за клик
+        function getClickBonus() {
+            let bonus = 0;
+            
+            // Базовые улучшения клика
+            for (const upgrade of Object.values(clickUpgrades)) {
+                bonus += upgrade.owned * upgrade.bonus;
+            }
+            
+            // Престижные бонусы
+            if (prestigeUpgrades.cookieMaster.owned) {
+                bonus *= 1 + (prestigeUpgrades.cookieMaster.owned * prestigeUpgrades.cookieMaster.bonus);
+            }
+            
+            return bonus;
+        }
+        
+        // Добавление печенек
+        function addCookies(amount) {
+            cookies += amount;
+            updateDisplay();
+        }
+        
+        // Покупка улучшения
+        function buyUpgrade(id, type = 'producer') {
+            let upgrade;
+            let upgradeType;
+            
+            if (type === 'click') {
+                upgrade = clickUpgrades[id];
+                upgradeType = 'click';
+            } else if (type === 'prestige') {
+                upgrade = prestigeUpgrades[id];
+                upgradeType = 'prestige';
+            } else {
+                upgrade = producers[id];
+                upgradeType = 'producer';
+            }
+            
+            // Проверяем максимальный уровень
+            if (upgrade.max && upgrade.owned >= upgrade.max) return;
+            
+            // Проверяем, достаточно ли печенек
+            if (cookies >= upgrade.price) {
+                cookies -= upgrade.price;
+                upgrade.owned++;
+                
+                // Пересчитываем цену
+                upgrade.price = Math.floor(upgrade.basePrice * Math.pow(upgrade.priceIncrease, upgrade.owned));
+                
+                // Обновляем игровые показатели
+                if (type === 'producer') {
+                    recalculateCPS();
+                } else if (type === 'click') {
+                    updateClickValue();
+                }
+                
+                // Обновляем UI
+                updateUpgradeUI(id, upgrade);
+                updateDisplay();
+                
+                // Эффект покупки
+                showNotification(`Куплено: ${upgrade.name} ${upgrade.icon || ''}`);
+            } else {
+                // Анимация при недостатке печенек
+                const element = document.getElementById(`upgrade-${id}`);
+                element.style.animation = 'none';
+                void element.offsetWidth; // Trigger reflow
+                element.style.animation = 'shake 0.5s';
+            }
+        }
+        
+        // Обновление UI улучшения
+        function updateUpgradeUI(id, upgrade) {
+            const element = document.getElementById(`upgrade-${id}`);
+            if (!element) return;
+            
+            element.querySelector('.upgrade-owned').textContent = upgrade.owned;
+            element.querySelector('.upgrade-price').textContent = `Цена: ${formatNumber(upgrade.price)}`;
+            
+            if (upgrade.max) {
+                const progress = element.querySelector('.progress-fill');
+                if (progress) {
+                    progress.style.width = `${(upgrade.owned / upgrade.max) * 100}%`;
+                }
+            }
+            
+            // Отключаем, если достигнут максимум
+            if (upgrade.max && upgrade.owned >= upgrade.max) {
+                element.classList.add('disabled');
+            }
+        }
+        
+        // Пересчет печенек в секунду
+        function recalculateCPS() {
+            cookiesPerSecond = 0;
+            
+            // Базовые производители
+            for (const producer of Object.values(producers)) {
+                cookiesPerSecond += producer.owned * producer.cps;
+            }
+            
+            // Престижные бонусы
+            if (prestigeUpgrades.legacy.owned) {
+                cookiesPerSecond *= 1 + (prestigeUpgrades.legacy.owned * prestigeUpgrades.legacy.bonus);
+            }
+        }
+        
+        // Обновление значения клика
+        function updateClickValue() {
+            document.getElementById('click-value').textContent = formatNumber(1 + getClickBonus());
+        }
+        
+        // Обновление отображения
+        function updateDisplay() {
+            document.getElementById('cookies').textContent = formatNumber(cookies);
+            document.getElementById('cps').textContent = formatNumber(cookiesPerSecond * prestigeBonus);
+            updateClickValue();
+            
+            // Обновляем состояние кнопки престижа
+            checkPrestige();
+            
+            // Обновляем видимость улучшений
+            updateUpgradesVisibility();
+        }
+        
+        // Обновление видимости улучшений
+        function updateUpgradesVisibility() {
+            for (const [id, producer] of Object.entries(producers)) {
+                const element = document.getElementById(`upgrade-${id}`);
+                if (element) {
+                    if (cookies >= producer.unlockAt || producer.owned > 0) {
+                        element.style.display = 'block';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                }
+            }
+            
+            for (const achievement of achievements) {
+                if (achievement.hidden) {
+                    const element = document.getElementById(`achievement-${achievement.id}`);
+                    if (element && isAchievementUnlocked(achievement)) {
+                        element.style.display = 'block';
+                    }
+                }
+            }
+        }
+        
+        // Проверка достижений
+        function checkAchievements() {
+            achievements.forEach(achievement => {
+                const element = document.getElementById(`achievement-${achievement.id}`);
+                if (!element) return;
+                
+                if (isAchievementUnlocked(achievement)) {
+                    element.classList.add('unlocked');
                 }
             });
-
-            // Load initial music
-            loadMusic(initialMusicData);
-        });
+        }
+        
+        // Проверка, разблокировано ли достижение
+        function isAchievementUnlocked(achievement) {
+            if (achievement.check) {
+                return achievement.check();
+            } else if (achievement.threshold) {
+                if (achievement.id.includes('cookie')) {
+                    return cookies >= achievement.threshold;
+                } else if (achievement.id.includes('click')) {
+                    return totalCookiesClicked >= achievement.threshold;
+                }
+            }
+            return false;
+        }
+        
+        // Появление золотого печенья
+        function spawnGoldenCookie() {
+            // Проверяем шанс появления (20% + бонусы)
+            const baseChance = 0.2;
+            const goldenLuckBonus = prestigeUpgrades.goldenLuck.owned * prestigeUpgrades.goldenLuck.bonus;
+            const spawnChance = baseChance + goldenLuckBonus;
+            
+            if (Math.random() > spawnChance) return;
+            
+            const goldenCookie = document.getElementById('golden-cookie');
+            
+            // Позиция
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            goldenCookie.style.left = `${x}px`;
+            goldenCookie.style.top = `${y}px`;
+            goldenCookie.style.display = 'block';
+            
+            // Обработчик клика
+            goldenCookie.onclick = function() {
+                goldenCookiesClicked++;
+                
+                // Случайный бонус
+                const bonusTypes = [
+                    { type: 'cookies', chance: 0.6, getAmount: () => Math.floor(cookiesPerSecond * 30 * (1 + Math.random())) },
+                    { type: 'multiplier', chance: 0.3, getAmount: () => 2, duration: 30 },
+                    { type: 'clickStorm', chance: 0.1, duration: 10 }
+                ];
+                
+                const selectedBonus = selectRandomBonus(bonusTypes);
+                applyGoldenCookieBonus(selectedBonus, x, y);
+                
+                goldenCookie.style.display = 'none';
+                goldenCookie.onclick = null;
+                
+                // Проверяем достижения
+                checkAchievements();
+                
+                // Снова появляется через случайное время
+                setTimeout(spawnGoldenCookie, 15000 + Math.random() * 45000);
+            };
+            
+            // Исчезает через 15 секунд, если не кликнули
+            setTimeout(() => {
+                if (goldenCookie.style.display === 'block') {
+                    goldenCookie.style.display = 'none';
+                    goldenCookie.onclick = null;
+                    setTimeout(spawnGoldenCookie, 15000 + Math.random() * 45000);
+                }
+            }, 15000);
+        }
+        
+        // Выбор случайного бонуса
+        function selectRandomBonus(bonusTypes) {
+            const total = bonusTypes.reduce((sum, type) => sum + type.chance, 0);
+            let random = Math.random() * total;
+            
+            for (const type of bonusTypes) {
+                if (random < type.chance) {
+                    return type;
+                }
+                random -= type.chance;
+            }
+            
+            return bonusTypes[0]; // fallback
+        }
+        
+        // Применение бонуса золотого печенья
+        function applyGoldenCookieBonus(bonus, x, y) {
+            let message = "";
+            
+            if (bonus.type === 'cookies') {
+                const amount = bonus.getAmount();
+                addCookies(amount);
+                message = `+${formatNumber(amount)} печенек!`;
+                
+                // Эффект
+                createClickEffect(x, y, amount, true);
+            } 
+            else if (bonus.type === 'multiplier') {
+                const multiplier = bonus.getAmount();
+                const originalCPS = cookiesPerSecond;
+                cookiesPerSecond *= multiplier;
+                message = `x${multiplier} к производству на ${bonus.duration} сек!`;
+                
+                // Возвращаем исходное значение через duration секунд
+                setTimeout(() => {
+                    cookiesPerSecond = originalCPS;
+                    showNotification("Бонус производства закончился");
+                }, bonus.duration * 1000);
+            }
+            else if (bonus.type === 'clickStorm') {
+                message = `ШТОРМ КЛИКОВ на ${bonus.duration} сек!`;
+                startClickStorm(bonus.duration);
+            }
+            
+            showNotification(`Золотое печенье: ${message}`, true);
+        }
+        
+        // Шторм кликов
+        function startClickStorm(duration) {
+            const stormInterval = setInterval(() => {
+                // Случайная позиция на печеньке
+                const cookie = document.getElementById('cookie-container');
+                const rect = cookie.getBoundingClientRect();
+                const x = Math.random() * rect.width;
+                const y = Math.random() * rect.height;
+                
+                // Автоклик
+                createClickEffect(x, y, 1 + getClickBonus());
+                addCookies(1 + getClickBonus());
+                totalCookiesClicked++;
+            }, 100);
+            
+            // Останавливаем шторм через duration секунд
+            setTimeout(() => {
+                clearInterval(stormInterval);
+                showNotification("Шторм кликов закончился");
+            }, duration * 1000);
+        }
+        
+        // Проверка доступности престижа
+        function checkPrestige() {
+            const nextPrestige = Math.floor(1000000 * Math.pow(2, prestigeLevel));
+            const prestigeButton = document.getElementById('prestige-button');
+            
+            document.getElementById('next-prestige').textContent = formatNumber(nextPrestige);
+            
+            if (cookies >= nextPrestige) {
+                prestigeButton.disabled = false;
+                prestigeButton.classList.add('rainbow-text');
+            } else {
+                prestigeButton.disabled = true;
+                prestigeButton.classList.remove('rainbow-text');
+            }
+        }
+        
+        // Престиж
+        function doPrestige() {
+            const nextPrestige = Math.floor(1000000 * Math.pow(2, prestigeLevel));
+            
+            if (cookies < nextPrestige) return;
+            
+            if (confirm(`Вы уверены, что хотите престиж? Вы получите ${Math.floor(Math.sqrt(cookies / 1000000))} престижных очков, но потеряете все печенья и улучшения.`)) {
+                // Рассчитываем очки престижа
+                const pointsGained = Math.floor(Math.sqrt(cookies / 1000000));
+                prestigePoints += pointsGained;
+                prestigeLevel++;
+                prestigeBonus = 1 + (prestigeLevel * 0.1);
+                
+                // Сбрасываем игру
+                cookies = 0;
+                cookiesPerSecond = 0;
+                cookiesPerClick = 1;
+                totalCookiesClicked = 0;
+                totalCookiesProduced = 0;
+                
+                // Сбрасываем производителей
+                for (const producer of Object.values(producers)) {
+                    producer.owned = 0;
+                    producer.price = producer.basePrice;
+                }
+                
+                // Сбрасываем улучшения клика
+                for (const upgrade of Object.values(clickUpgrades)) {
+                    upgrade.owned = 0;
+                    upgrade.price = upgrade.basePrice;
+                }
+                
+                // Обновляем UI
+                updateDisplay();
+                document.getElementById('prestige-level').textContent = prestigeLevel;
+                document.getElementById('prestige-points').textContent = prestigePoints;
+                document.getElementById('prestige-bonus').textContent = prestigeBonus.toFixed(1);
+                
+                // Обновляем все улучшения в UI
+                for (const [id, producer] of Object.entries(producers)) {
+                    updateUpgradeUI(id, producer);
+                }
+                
+                for (const [id, upgrade] of Object.entries(clickUpgrades)) {
+                    updateUpgradeUI(id, upgrade);
+                }
+                
+                // Показываем уведомление
+                showNotification(`Престиж ${prestigeLevel}! Получено ${pointsGained} очков престижа`, true);
+                
+                // Сохраняем игру
+                saveGame();
+            }
+        }
+        
+        // Показать уведомление
+        function showNotification(message, isImportant = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            if (isImportant) {
+                notification.style.background = 'linear-gradient(135deg, #FF5722, #FF9800)';
+            } else {
+                notification.style.background = 'rgba(0,0,0,0.8)';
+            }
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, isImportant ? 3000 : 2000);
+        }
+        
+        // Форматирование чисел
+        function formatNumber(num) {
+            if (num >= 1e12) return (num / 1e12).toFixed(1) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+            return Math.floor(num).toString();
+        }
+        
+        // Сохранение игры
+        function saveGame() {
+            gameState = {
+                lastUpdate: Date.now(),
+                cookies: cookies,
+                upgrades: {
+                    producers: {},
+                    click: {},
+                    prestige: {}
+                },
+                achievements: [],
+                stats: {
+                    totalCookiesClicked: totalCookiesClicked,
+                    totalCookiesProduced: totalCookiesProduced,
+                    goldenCookiesClicked: goldenCookiesClicked
+                },
+                prestige: {
+                    level: prestigeLevel,
+                    points: prestigePoints,
+                    bonus: prestigeBonus
+                },
+                version: gameVersion
+            };
+            
+            // Сохраняем производителей
+            for (const [id, producer] of Object.entries(producers)) {
+                gameState.upgrades.producers[id] = {
+                    owned: producer.owned,
+                    price: producer.price
+                };
+            }
+            
+            // Сохраняем улучшения клика
+            for (const [id, upgrade] of Object.entries(clickUpgrades)) {
+                gameState.upgrades.click[id] = {
+                    owned: upgrade.owned,
+                    price: upgrade.price
+                };
+            }
+            
+            // Сохраняем престижные улучшения
+            for (const [id, upgrade] of Object.entries(prestigeUpgrades)) {
+                gameState.upgrades.prestige[id] = {
+                    owned: upgrade.owned,
+                    price: upgrade.price
+                };
+            }
+            
+            // Сохраняем достижения
+            gameState.achievements = achievements
+                .filter(achievement => isAchievementUnlocked(achievement))
+                .map(achievement => achievement.id);
+            
+            localStorage.setItem('ultimateCookieClickerSave', JSON.stringify(gameState));
+            
+            showNotification("Игра сохранена! 💾");
+        }
+        
+        // Загрузка игры
+        function loadGame() {
+            const savedData = localStorage.getItem('ultimateCookieClickerSave');
+            
+            if (savedData) {
+                try {
+                    const loadedState = JSON.parse(savedData);
+                    
+                    // Проверка версии
+                    if (loadedState.version !== gameVersion) {
+                        showNotification("Версия сохранения устарела, некоторые данные могут быть потеряны");
+                    }
+                    
+                    // Основные данные
+                    cookies = loadedState.cookies || 0;
+                    
+                    // Производители
+                    if (loadedState.upgrades?.producers) {
+                        for (const [id, data] of Object.entries(loadedState.upgrades.producers)) {
+                            if (producers[id]) {
+                                producers[id].owned = data.owned || 0;
+                                producers[id].price = data.price || producers[id].basePrice;
+                            }
+                        }
+                    }
+                    
+                    // Улучшения клика
+                    if (loadedState.upgrades?.click) {
+                        for (const [id, data] of Object.entries(loadedState.upgrades.click)) {
+                            if (clickUpgrades[id]) {
+                                clickUpgrades[id].owned = data.owned || 0;
+                                clickUpgrades[id].price = data.price || clickUpgrades[id].basePrice;
+                            }
+                        }
+                    }
+                    
+                    // Престижные улучшения
+                    if (loadedState.upgrades?.prestige) {
+                        for (const [id, data] of Object.entries(loadedState.upgrades.prestige)) {
+                            if (prestigeUpgrades[id]) {
+                                prestigeUpgrades[id].owned = data.owned || 0;
+                                prestigeUpgrades[id].price = data.price || prestigeUpgrades[id].basePrice;
+                            }
+                        }
+                    }
+                    
+                    // Статистика
+                    if (loadedState.stats) {
+                        totalCookiesClicked = loadedState.stats.totalCookiesClicked || 0;
+                        totalCookiesProduced = loadedState.stats.totalCookiesProduced || 0;
+                        goldenCookiesClicked = loadedState.stats.goldenCookiesClicked || 0;
+                    }
+                    
+                    // Престиж
+                    if (loadedState.prestige) {
+                        prestigeLevel = loadedState.prestige.level || 0;
+                        prestigePoints = loadedState.prestige.points || 0;
+                        prestigeBonus = loadedState.prestige.bonus || 1;
+                    }
+                    
+                    // Пересчет показателей
+                    recalculateCPS();
+                    updateClickValue();
+                    
+                    // Обновляем престиж UI
+                    document.getElementById('prestige-level').textContent = prestigeLevel;
+                    document.getElementById('prestige-points').textContent = prestigePoints;
+                    document.getElementById('prestige-bonus').textContent = prestigeBonus.toFixed(1);
+                    
+                    // Восстанавливаем достижения
+                    if (Array.isArray(loadedState.achievements)) {
+                        loadedState.achievements.forEach(achievementId => {
+                            const achievement = achievements.find(a => a.id === achievementId);
+                            if (achievement) {
+                                const element = document.getElementById(`achievement-${achievement.id}`);
+                                if (element) element.classList.add('unlocked');
+                            }
+                        });
+                    }
+                    
+                    showNotification("Игра загружена! 🎮");
+                } catch (e) {
+                    console.error("Ошибка загрузки сохранения:", e);
+                    showNotification("Ошибка загрузки сохранения 😢");
+                }
+            }
+        }
+        
+        // Расчет оффлайн-прогресса
+        function calculateOfflineProgress() {
+            if (gameState.lastUpdate) {
+                const now = Date.now();
+                const diff = now - gameState.lastUpdate;
+                const offlineSeconds = Math.min(diff / 1000, 86400); // Максимум 24 часа
+                
+                if (offlineSeconds > 10) { // Минимум 10 секунд
+                    const offlineCookies = cookiesPerSecond * offlineSeconds * 0.5 * prestigeBonus; // 50% от обычного производства
+                    if (offlineCookies > 0) {
+                        addCookies(offlineCookies);
+                        totalCookiesProduced += offlineCookies;
+                        showNotification(`Пока вас не было: ${formatNumber(offlineCookies)} печенек (${formatTime(offlineSeconds)})`, true);
+                    }
+                }
+            }
+        }
+        
+        // Форматирование времени
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = Math.floor(seconds % 60);
+            
+            return [
+                hours > 0 ? `${hours}ч` : '',
+                minutes > 0 ? `${minutes}м` : '',
+                `${secs}с`
+            ].filter(Boolean).join(' ');
+        }
+        
+        // Автосохранение
+        function autoSave() {
+            saveGame();
+            showNotification("Игра автосохранена");
+        }
+        
+        // Сброс игры
+        function resetGame() {
+            if (confirm("Вы уверены, что хотите полностью сбросить игру? Все ваши сохранения будут удалены.")) {
+                // Сбрасываем переменные
+                cookies = 0;
+                cookiesPerSecond = 0;
+                cookiesPerClick = 1;
+                totalCookiesClicked = 0;
+                totalCookiesProduced = 0;
+                prestigeLevel = 0;
+                prestigePoints = 0;
+                prestigeBonus = 1;
+                goldenCookiesClicked = 0;
+                
+                // Сбрасываем производителей
+                for (const producer of Object.values(producers)) {
+                    producer.owned = 0;
+                    producer.price = producer.basePrice;
+                }
+                
+                // Сбрасываем улучшения клика
+                for (const upgrade of Object.values(clickUpgrades)) {
+                    upgrade.owned = 0;
+                    upgrade.price = upgrade.basePrice;
+                }
+                
+                // Сбрасываем престижные улучшения
+                for (const upgrade of Object.values(prestigeUpgrades)) {
+                    upgrade.owned = 0;
+                    upgrade.price = upgrade.basePrice;
+                }
+                
+                // Пересчет показателей
+                recalculateCPS();
+                updateClickValue();
+                
+                // Обновляем UI
+                updateDisplay();
+                document.getElementById('prestige-level').textContent = prestigeLevel;
+                document.getElementById('prestige-points').textContent = prestigePoints;
+                document.getElementById('prestige-bonus').textContent = prestigeBonus.toFixed(1);
+                
+                // Обновляем все улучшения в UI
+                for (const [id, producer] of Object.entries(producers)) {
+                    updateUpgradeUI(id, producer);
+                }
+                
+                for (const [id, upgrade] of Object.entries(clickUpgrades)) {
+                    updateUpgradeUI(id, upgrade);
+                }
+                
+                // Сбрасываем достижения
+                document.querySelectorAll('.achievement').forEach(el => {
+                    el.classList.remove('unlocked');
+                });
+                
+                // Удаляем сохранение
+                localStorage.removeItem('ultimateCookieClickerSave');
+                
+                showNotification("Игра сброшена! 🔄", true);
+            }
+        }
+        
+        // Запуск игры при загрузке страницы
+        window.onload = initGame;
     </script>
 </body>
 </html>
