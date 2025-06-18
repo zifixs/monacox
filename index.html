@@ -20,25 +20,24 @@
 
         /* Стили для кастомного скроллбара */
         body::-webkit-scrollbar {
-            width: 12px; /* Ширина скроллбара */
+            width: 12px;
         }
 
         body::-webkit-scrollbar-track {
-            background-color: #2F2F2F; /* Фон трека скроллбара */
-            border-radius: 0; /* Трек без скругления */
+            background-color: #2F2F2F;
+            border-radius: 0;
         }
 
         body::-webkit-scrollbar-thumb {
-            background-color: #555; /* Цвет ползунка */
-            border-radius: 10px; /* **Закругление углов ползунка** */
-            border: 3px solid #17181C; /* Обводка ползунка */
+            background-color: #555;
+            border-radius: 10px;
+            border: 3px solid #17181C;
         }
 
         body::-webkit-scrollbar-thumb:hover {
-            background-color: #777; /* Цвет ползунка при наведении */
+            background-color: #777;
         }
 
-        /* Убираем специфичные стили для скрытия скроллбара в Firefox и IE/Edge */
         body {
             scrollbar-width: auto;
             -ms-overflow-style: auto;
@@ -61,30 +60,27 @@
             top: 0;
             z-index: 1000;
             flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
-            gap: 10px; /* Отступ между элементами панели */
+            gap: 15px; /* Отступ между элементами панели */
         }
 
-        /* Контейнер для навигационных секций */
         .nav-sections {
             display: flex;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap; /* Позволяет кнопкам переноситься */
-            justify-content: center; /* Центрирование кнопок на маленьких экранах */
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* Стили для навигационных панелей */
         .left-panel, .right-nav-panel {
             display: flex;
             gap: 15px;
             background-color: #363636;
             border-radius: 15px;
             padding: 10px 20px;
-            flex-wrap: wrap; /* Позволяет кнопкам внутри панелей переноситься */
-            justify-content: center; /* Центрирование кнопок внутри панелей */
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* Вертикальный разделитель */
         .vertical-divider {
             width: 2px;
             height: 40px;
@@ -110,7 +106,6 @@
             background-color: #3a3a3a;
         }
 
-        /* Стиль активной кнопки - маленький кружок */
         .nav-button::after {
             content: '';
             position: absolute;
@@ -153,7 +148,6 @@
             opacity: 1;
         }
 
-        /* Для активного состояния, убедиться, что показано изображение варианта 's' */
         .nav-button.active .img-default {
             opacity: 0;
         }
@@ -234,24 +228,11 @@
             font-size: 14px;
         }
 
-        /* Стрелка всплывающей подсказки */
-        .tooltip::after {
-            content: "";
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: transparent transparent #333 transparent;
-        }
-
-        /* Показать всплывающую подсказку при наведении */
         .search-icon-wrapper:hover .tooltip {
             visibility: visible;
             opacity: 1;
         }
-        /* Новая круглая кнопка для фото */
+
         .photo-button {
             width: 45px;
             height: 45px;
@@ -273,7 +254,6 @@
             transform: scale(1.05);
         }
 
-        /* Изображение внутри кнопки фото */
         .photo-button #profileImage {
             width: 100%;
             height: 100%;
@@ -282,12 +262,10 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Скрытый инпут для файла */
         .photo-input {
             display: none;
         }
 
-        /* Стили для иконки редактирования, когда нет пользовательского фото */
         .photo-button .edit-icon-overlay {
             position: absolute;
             top: 0;
@@ -304,7 +282,6 @@
             pointer-events: none;
         }
 
-        /* Показать наложение при наведении только если нет пользовательского фото */
         .photo-button:hover .edit-icon-overlay.no-photo {
             opacity: 1;
         }
@@ -314,26 +291,21 @@
             height: 28px;
         }
 
-        /* Когда наложение видимо, скрыть изображение профиля */
         .photo-button:hover #profileImage.no-photo-selected {
             opacity: 0;
         }
 
-        /* Убедиться, что наложение иконки редактирования не видно, если выбрано фото */
         .photo-button.has-photo .edit-icon-overlay {
             display: none;
         }
 
-        /* Убедиться, что изображение профиля всегда видно, если выбрано фото */
         .photo-button.has-photo #profileImage {
              opacity: 1;
         }
-        /* Скрыть изображение, когда фото не выбрано */
         .photo-button #profileImage.no-photo-selected {
             opacity: 0;
         }
 
-        /* Новая нижняя правая панель */
         .bottom-right-panel {
             position: fixed;
             bottom: 0;
@@ -344,49 +316,162 @@
             box-shadow: none;
             padding: 0;
             border-radius: 20px 0 0 0;
-            z-index: 999; /* Чтобы была под верхней панелью, если они пересекаются */
+            z-index: 999;
+        }
+
+        /* --- Контейнер для музыки --- */
+        .music-container {
+            width: 90%;
+            max-width: 1000px;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
+            justify-content: center; /* Центрирует элементы */
+            gap: 20px; /* Отступ между карточками песен */
+            padding-bottom: 100px; /* Отступ снизу, чтобы не перекрывалось нижней панелью */
+        }
+
+        .music-card {
+            background-color: #262626;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #E0E0E0;
+            width: calc(20% - 16px); /* 5 карточек в строку минус gap */
+            box-sizing: border-box; /* Учитываем padding в ширине */
+            min-width: 150px; /* Минимальная ширина, чтобы карточки не становились слишком узкими */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .music-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .music-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .music-card .song-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            white-space: nowrap; /* Запрет переноса текста */
+            overflow: hidden;     /* Обрезка скрытого текста */
+            text-overflow: ellipsis; /* Добавляет многоточие */
+            width: 100%; /* Занимает всю доступную ширину */
+        }
+
+        .music-card .artist-name {
+            font-size: 0.9em;
+            color: #BBBBBB;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
         }
 
         /* --- АДАПТИВНЫЙ ДИЗАЙН --- */
 
-        /* Для планшетов (ширина до 768px) */
-        @media (max-width: 768px) {
-            .top-panel {
-                flex-direction: column; /* Элементы верхней панели выстраиваются в столбец */
-                align-items: center; /* Центрируем элементы */
-                padding: 10px;
-                width: 95%; /* Чуть шире */
-            }
+        /* Общие правила для flex-контейнеров на маленьких экранах */
+        .top-panel, .nav-sections, .left-panel, .right-nav-panel, .music-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
 
-            .nav-sections {
-                flex-direction: column; /* Навигационные панели также в столбец */
-                width: 100%;
-                gap: 10px;
+        /* Для планшетов (ширина до 1024px) */
+        @media (max-width: 1024px) {
+            .top-panel {
+                padding: 10px;
+                width: 95%;
+                gap: 10px; /* Уменьшаем отступ между основными блоками */
             }
 
             .left-panel, .right-nav-panel {
-                width: 100%; /* Занимают всю ширину */
-                justify-content: space-around; /* Распределяем кнопки */
-                padding: 10px 5px; /* Меньшие отступы */
-            }
-
-            .vertical-divider {
-                display: none; /* Скрываем разделитель */
+                padding: 8px 15px;
+                gap: 10px; /* Уменьшаем отступ между кнопками внутри панелей */
             }
 
             .search-container {
-                width: 95%; /* Занимает почти всю ширину */
                 margin: 10px 0; /* Отступы сверху и снизу */
+                width: calc(100% - 20px); /* Занимает почти всю ширину */
+                order: 3; /* Перемещаем поиск вниз на планшетах */
             }
 
             .photo-button {
-                margin-top: 10px; /* Отступ сверху */
+                margin-top: 0; /* Убираем лишний отступ */
+            }
+
+            .music-container {
+                gap: 15px;
+                width: 95%;
+            }
+
+            .music-card {
+                width: calc(25% - 12px); /* 4 карточки в строку */
+                min-width: 130px;
             }
 
             .bottom-right-panel {
-                width: 100%; /* Занимает всю ширину на планшетах */
+                width: 100%; /* Занимает всю ширину */
                 border-radius: 20px 20px 0 0; /* Закругляем верхние углы */
-                height: 60px; /* Делаем чуть ниже */
+                height: 70px; /* Немного ниже */
+            }
+        }
+
+
+        /* Для маленьких планшетов / больших телефонов (ширина до 768px) */
+        @media (max-width: 768px) {
+            .top-panel {
+                flex-direction: column;
+                align-items: center;
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+            }
+
+            .nav-sections {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .left-panel, .right-nav-panel {
+                width: 100%;
+                justify-content: space-around; /* Распределяем кнопки */
+                padding: 8px 5px;
+            }
+
+            .vertical-divider {
+                display: none; /* Скрываем разделитель на маленьких экранах */
+            }
+
+            .search-container {
+                margin: 10px 0;
+                width: 100%; /* Полностью всю ширину */
+                order: 3; /* Оставляем внизу */
+            }
+
+            .photo-button {
+                margin-top: 10px; /* Небольшой отступ, если поиск внизу */
+                order: 2; /* Перемещаем кнопку фото после навигации */
+            }
+
+            .music-card {
+                width: calc(33.33% - 10px); /* 3 карточки в строку */
+                min-width: 120px;
+            }
+
+            .bottom-right-panel {
+                height: 60px;
+                border-radius: 15px 15px 0 0;
             }
         }
 
@@ -398,38 +483,45 @@
                 border-bottom-right-radius: 10px;
             }
 
-            .left-panel, .right-nav-panel {
-                padding: 8px 3px;
-                gap: 10px;
-            }
-
             .nav-button {
-                width: 35px; /* Чуть меньше кнопки */
+                width: 35px;
                 height: 35px;
             }
 
             .nav-button img {
-                width: 20px; /* Меньше иконки */
+                width: 20px;
                 height: 20px;
             }
 
             .search-input {
-                font-size: 14px; /* Меньше шрифт в поиске */
+                font-size: 14px;
             }
 
             .search-icon {
-                width: 18px; /* Меньше иконка поиска */
+                width: 18px;
                 height: 18px;
             }
 
             .photo-button {
-                width: 40px; /* Меньше кнопка фото */
+                width: 40px;
                 height: 40px;
             }
 
+            .music-card {
+                width: calc(50% - 10px); /* 2 карточки в строку */
+                min-width: unset; /* Убираем min-width для максимальной гибкости */
+            }
+
             .bottom-right-panel {
-                height: 50px; /* Ещё ниже */
-                border-radius: 15px 15px 0 0;
+                height: 50px;
+                border-radius: 10px 10px 0 0;
+            }
+        }
+
+        /* Для очень маленьких телефонов (ширина до 320px) */
+        @media (max-width: 320px) {
+            .music-card {
+                width: calc(100% - 10px); /* 1 карточка в строку */
             }
         }
     </style>
@@ -493,7 +585,8 @@
         </div>
     </div>
 
-    <div style="height: 1200px; width: 100%; position: absolute; top: 100px;"></div>
+    <div class="music-container" id="musicContainer">
+        </div>
 
     <div class="bottom-right-panel">
         </div>
@@ -505,6 +598,7 @@
             const photoInput = document.getElementById('photoInput');
             const profileImage = document.getElementById('profileImage');
             const editIconOverlay = photoButton.querySelector('.edit-icon-overlay');
+            const musicContainer = document.getElementById('musicContainer');
 
             // --- Логика для навигационных кнопок ---
             const initialActiveButton = document.querySelector('.nav-button[data-button="home"]');
@@ -520,7 +614,6 @@
             });
 
             // --- Логика для выбора фото ---
-
             function updatePhotoButtonState() {
                 const savedImage = localStorage.getItem('profilePicture');
                 if (savedImage) {
@@ -556,6 +649,39 @@
                     updatePhotoButtonState();
                 }
             });
+
+            // --- Логика загрузки и отображения музыки из JSON ---
+            async function loadMusic() {
+                try {
+                    const response = await fetch('music.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const musicData = await response.json();
+                    displayMusic(musicData);
+                } catch (error) {
+                    console.error('Ошибка загрузки музыки:', error);
+                    musicContainer.innerHTML = '<p style="color: #FF6347; text-align: center;">Не удалось загрузить музыкальные треки.</p>';
+                }
+            }
+
+            function displayMusic(musicData) {
+                musicContainer.innerHTML = ''; // Очищаем контейнер перед добавлением нового контента
+                musicData.forEach(song => {
+                    const musicCard = document.createElement('div');
+                    musicCard.classList.add('music-card');
+                    musicCard.innerHTML = `
+                        <img src="${song.avatar}" alt="${song.title} обложка">
+                        <div class="song-title">${song.title}</div>
+                        <div class="artist-name">${song.artist}</div>
+                        <audio src="${song.link}" controls style="width: 100%; margin-top: 10px;"></audio>
+                    `;
+                    musicContainer.appendChild(musicCard);
+                });
+            }
+
+            // Загружаем музыку при загрузке страницы
+            loadMusic();
         });
     </script>
 </body>
