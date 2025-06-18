@@ -1,0 +1,44 @@
+[
+    {
+        "title": "akisedd - milk cassette x.mp3 x fight club",
+        "artist": "akisedd",
+        "avatar": "pr.png",
+        "link": "akisedd - milk cassette x.mp3 x fight club.mp3"
+    },
+    {
+        "title": "Очень длинное название второй песни",
+        "artist": "Очень известный исполнитель два",
+        "avatar": "album2.jpg",
+        "link": "song2.mp3"
+    },
+    {
+        "title": "Трек 3",
+        "artist": "Артист 3",
+        "avatar": "album3.jpg",
+        "link": "song3.mp3"
+    },
+    {
+        "title": "Композиция 4",
+        "artist": "Группа 4",
+        "avatar": "album4.jpg",
+        "link": "song4.mp3"
+    },
+    {
+        "title": "Песня 5",
+        "artist": "Соло Исполнитель 5",
+        "avatar": "album5.jpg",
+        "link": "song5.mp3"
+    },
+    {
+        "title": "Мелодия 6",
+        "artist": "Коллектив 6",
+        "avatar": "album6.jpg",
+        "link": "song6.mp3"
+    },
+    {
+        "title": "Танцевальный хит 7",
+        "artist": "DJ Семь",
+        "avatar": "album7.jpg",
+        "link": "song7.mp3"
+    }
+]
