@@ -16,10 +16,9 @@
             margin: 0;
             font-family: 'Comfortaa', cursive;
             overflow-y: scroll;
-            padding-bottom: 100px; /* Отступ снизу для нижней панели плеера */
+            padding-bottom: 100px;
         }
 
-        /* Стили для кастомного скроллбара (возвращены прежние цвета) */
         body::-webkit-scrollbar {
             width: 12px;
         }
@@ -30,13 +29,13 @@
         }
 
         body::-webkit-scrollbar-thumb {
-            background-color: #555; /* Вернул прежний цвет */
+            background-color: #555;
             border-radius: 10px;
             border: 3px solid #17181C;
         }
 
         body::-webkit-scrollbar-thumb:hover {
-            background-color: #777; /* Вернул прежний цвет */
+            background-color: #777;
         }
 
         body {
@@ -44,7 +43,6 @@
             -ms-overflow-style: auto;
         }
 
-        /* Стили для верхней панели */
         .top-panel {
             width: 90%;
             max-width: 1200px;
@@ -209,7 +207,6 @@
             display: block;
         }
 
-        /* Стили для всплывающей подсказки */
         .tooltip {
             visibility: hidden;
             opacity: 0;
@@ -307,16 +304,15 @@
             opacity: 0;
         }
 
-        /* --- Контейнер для музыки --- */
         .music-container {
             width: 90%;
-            max-width: 1200px; /* Совпадает с top-panel */
+            max-width: 1200px;
             margin-top: 20px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 20px;
-            padding-bottom: 20px; /* Отступ снизу, чтобы не перекрывалось нижней панелью */
+            padding-bottom: 20px;
         }
 
         .music-card {
@@ -328,12 +324,12 @@
             align-items: center;
             text-align: center;
             color: #E0E0E0;
-            width: calc(16.66% - 17px); /* **6 карточек в строку минус gap** */
+            width: calc(16.66% - 17px);
             box-sizing: border-box;
-            min-width: 140px; /* Минимальная ширина, чтобы карточки не становились слишком узкими */
+            min-width: 140px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
-            position: relative; /* Для позиционирования play-кнопки */
+            position: relative;
         }
 
         .music-card:hover {
@@ -368,26 +364,26 @@
             width: 100%;
         }
 
-        /* Стили для кнопки "играть" на карточке (по центру) */
         .music-card .play-button-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%; /* Увеличил высоту, чтобы покрывать всю карточку */
+            top: 15px;
+            left: 15px;
+            width: 100px;
+            height: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
+            border-radius: 10px;
             opacity: 0;
             transition: opacity 0.3s ease;
-            pointer-events: none; /* Чтобы клики проходили на карточку */
+            pointer-events: none;
+            overflow: hidden;
         }
 
         .music-card:hover .play-button-overlay {
             opacity: 1;
-            pointer-events: auto; /* Активируем клики при наведении */
+            pointer-events: auto;
         }
 
         .music-card .play-button-overlay img {
@@ -395,8 +391,8 @@
             height: 50px;
             opacity: 0.8;
             transition: transform 0.2s ease, opacity 0.2s ease;
-            border-radius: 0; /* Убираем закругление с картинки play/pause */
-            margin-bottom: 0; /* Убираем отступ */
+            border-radius: 0;
+            margin-bottom: 0;
         }
 
         .music-card .play-button-overlay img:hover {
@@ -404,19 +400,18 @@
             opacity: 1;
         }
 
-        /* --- Нижняя правая панель управления плеером (новая компоновка) --- */
         .audio-player-bar {
             position: fixed;
             bottom: 0;
-            right: 0; /* Прикрепил к правой стороне */
-            width: 810px; /* Вернул размер */
-            height: 80px; /* Толщина панели */
+            right: 0;
+            width: 810px;
+            height: 80px;
             background-color: #262626;
             box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 20px 0 0 0; /* Закругление только слева сверху */
+            border-radius: 20px 0 0 0;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Выравнивание элементов */
+            justify-content: flex-start;
             padding: 10px 20px;
             box-sizing: border-box;
             z-index: 2000;
@@ -434,22 +429,55 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            position: relative;
         }
 
         .player-info img {
-            width: 60px; /* Увеличил обложку */
+            width: 60px;
             height: 60px;
             border-radius: 8px;
             object-fit: cover;
             flex-shrink: 0;
         }
 
+        .player-info .play-pause-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .player-info:hover .play-pause-overlay {
+            opacity: 1;
+        }
+
+        .player-info .play-pause-overlay img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.2s ease;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        .player-info .play-pause-overlay img:hover {
+            transform: scale(1.1);
+        }
+
         .song-details {
             display: flex;
             flex-direction: column;
             color: #E0E0E0;
-            min-width: 120px; /* Фиксированная ширина для текста */
-            max-width: 180px; /* Максимальная ширина, чтобы не растягивалось слишком сильно */
+            min-width: 120px;
+            max-width: 180px;
         }
 
         .song-details .current-title {
@@ -470,19 +498,19 @@
 
         .player-center-section {
             display: flex;
-            flex-direction: column; /* Элементы в столбец */
+            flex-direction: column;
             align-items: center;
-            flex-grow: 1; /* Занимает доступное пространство */
-            margin: 0 10px; /* Отступы между секциями */
-            gap: 5px; /* Отступ между кнопками и прогрессом */
-            max-width: 400px; /* Ограничиваем ширину центральной секции */
+            flex-grow: 1;
+            margin: 0 10px;
+            gap: 5px;
+            max-width: 400px;
         }
 
         .player-controls {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 5px; /* Отступ от прогресс-бара */
+            margin-bottom: 5px;
         }
 
         .player-control-button {
@@ -495,38 +523,42 @@
             justify-content: center;
         }
 
-        .player-control-button img {
-            width: 25px; /* Размер кнопок */
-            height: 25px;
-            transition: transform 0.2s ease;
+        #prevButton img {
+            transform: scaleX(-1);
         }
 
-        .player-control-button img.flip-horizontal {
-            transform: scaleX(-1); /* Для переворота sled.png */
+        .player-control-button img {
+            width: 25px;
+            height: 25px;
+            transition: transform 0.2s ease;
         }
 
         .player-control-button:hover img {
             transform: scale(1.1);
         }
 
+        #prevButton:hover img {
+            transform: scale(1.1) scaleX(-1);
+        }
+
         .progress-container {
             display: flex;
             align-items: center;
             gap: 8px;
-            width: 100%; /* Занимает всю ширину */
+            width: 100%;
         }
 
         .progress-time {
             color: #BBBBBB;
             font-size: 0.8em;
-            width: 35px; /* Фиксированная ширина для времени */
+            width: 35px;
             text-align: center;
             flex-shrink: 0;
         }
 
         .progress-bar-wrapper {
             flex-grow: 1;
-            height: 6px; /* Чуть тоньше */
+            height: 6px;
             background-color: #444;
             border-radius: 3px;
             cursor: pointer;
@@ -536,17 +568,24 @@
         .progress-bar {
             height: 100%;
             width: 0%;
-            background-color: #8C52FF; /* Яркий цвет */
+            background-color: #999;
             border-radius: 3px;
-            transition: width 0.1s linear;
+            transition: none;
+            position: relative;
         }
 
-        .player-right-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-            margin-left: 20px;
+        .progress-bar-thumb {
+            width: 14px;
+            height: 14px;
+            background-color: #999;
+            border-radius: 50%;
+            position: absolute;
+            right: -7px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 1;
         }
 
         .volume-container {
@@ -556,7 +595,7 @@
         }
 
         .volume-container img {
-            width: 20px; /* Размер иконки громкости */
+            width: 20px;
             height: 20px;
             cursor: pointer;
             transition: transform 0.2s ease;
@@ -569,7 +608,7 @@
         .volume-slider {
             -webkit-appearance: none;
             width: 80px;
-            height: 6px; /* Чуть тоньше */
+            height: 6px;
             background: #444;
             outline: none;
             border-radius: 3px;
@@ -579,39 +618,42 @@
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 14px; /* Чуть меньше */
+            width: 14px;
             height: 14px;
-            background: #8C52FF; /* Яркий цвет */
+            background: #999;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(140, 82, 255, 0.7);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
 
         .volume-slider::-moz-range-thumb {
             width: 14px;
             height: 14px;
-            background: #8C52FF;
+            background: #999;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(140, 82, 255, 0.7);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
 
-        /* --- АДАПТИВНЫЙ ДИЗАЙН --- */
-
-        /* Общие правила для flex-контейнеров на маленьких экранах */
-        .top-panel, .nav-sections, .left-panel, .right-nav-panel, .music-container {
+        .top-panel, .nav-sections, .left-panel, .right-nav-panel {
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
         }
 
-        @media (max-width: 1200px) { /* Если экран меньше 1200px */
+        .music-container {
+             flex-wrap: wrap;
+             justify-content: flex-start;
+             gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
             .music-card {
-                width: calc(20% - 16px); /* 5 карточек в строку */
+                width: calc(20% - 16px);
             }
             .audio-player-bar {
-                width: 100%; /* На широких экранах становится полноценной нижней панелью */
-                border-radius: 20px 20px 0 0; /* Закругляем верхние углы */
+                width: 100%;
+                border-radius: 20px 20px 0 0;
                 justify-content: space-between;
                 padding: 0 20px;
             }
@@ -651,17 +693,27 @@
             }
 
             .music-card {
-                width: calc(25% - 12px); /* 4 карточки в строку */
+                width: calc(25% - 12px);
                 min-width: 130px;
+            }
+            .music-card .play-button-overlay {
+                width: 100px;
+                height: 100px;
+                top: 15px;
+                left: 15px;
             }
 
             .audio-player-bar {
                 height: 70px;
                 padding: 0 15px;
             }
-            .player-info img {
+            .player-info img, .player-info .play-pause-overlay {
                 width: 50px;
                 height: 50px;
+            }
+            .player-info .play-pause-overlay img {
+                width: 25px;
+                height: 25px;
             }
             .player-control-button img {
                 width: 22px;
@@ -715,13 +767,19 @@
             }
 
             .music-card {
-                width: calc(33.33% - 10px); /* 3 карточки в строку */
+                width: calc(33.33% - 10px);
                 min-width: 120px;
+            }
+            .music-card .play-button-overlay {
+                width: calc(100% - 30px);
+                height: calc(100% - 30px);
+                top: 15px;
+                left: 15px;
             }
 
             .audio-player-bar {
-                height: auto; /* Высота подстраивается под контент */
-                flex-direction: column; /* Элементы в столбец */
+                height: auto;
+                flex-direction: column;
                 padding: 10px 10px;
                 border-radius: 15px 15px 0 0;
             }
@@ -737,13 +795,13 @@
                 max-width: unset;
             }
             .progress-container {
-                flex-wrap: wrap; /* Позволяет времени переноситься */
+                flex-wrap: wrap;
             }
             .progress-time {
                 width: auto;
             }
             .volume-slider {
-                width: 100px; /* Возможно, лучше дать ему чуть больше места */
+                width: 100px;
             }
         }
 
@@ -779,8 +837,14 @@
             }
 
             .music-card {
-                width: calc(50% - 10px); /* 2 карточки в строку */
+                width: calc(50% - 10px);
                 min-width: unset;
+            }
+            .music-card .play-button-overlay {
+                width: calc(100% - 30px);
+                height: calc(100% - 30px);
+                top: 15px;
+                left: 15px;
             }
 
             .audio-player-bar {
@@ -788,9 +852,13 @@
                 padding: 5px;
                 border-radius: 10px 10px 0 0;
             }
-            .player-info img {
+            .player-info img, .player-info .play-pause-overlay {
                 width: 40px;
                 height: 40px;
+            }
+            .player-info .play-pause-overlay img {
+                width: 20px;
+                height: 20px;
             }
             .player-control-button img {
                 width: 20px;
@@ -801,9 +869,9 @@
             }
         }
 
-        @media (max-width: 360px) { /* Для очень маленьких экранов */
+        @media (max-width: 360px) {
             .music-card {
-                width: calc(100% - 10px); /* 1 карточка в строку */
+                width: calc(100% - 10px);
             }
             .audio-player-bar {
                 height: auto;
@@ -815,9 +883,13 @@
                 justify-content: center;
                 margin-top: 5px;
             }
-            .player-info img {
+            .player-info img, .player-info .play-pause-overlay {
                 width: 30px;
                 height: 30px;
+            }
+            .player-info .play-pause-overlay img {
+                width: 18px;
+                height: 18px;
             }
             .player-control-button img {
                 width: 18px;
@@ -895,6 +967,9 @@
         <audio id="audioPlayer" src=""></audio> <div class="player-left-section">
             <div class="player-info">
                 <img src="default_album.jpg" alt="Обложка альбома" id="currentAlbumArt">
+                <div class="play-pause-overlay" id="playerAlbumPlayPause">
+                    <img src="play.png" alt="Воспроизвести/Пауза" id="playerAlbumPlayPauseIcon">
+                </div>
                 <div class="song-details">
                     <div class="current-title" id="currentSongTitle">Название песни</div>
                     <div class="current-artist" id="currentArtistName">Исполнитель</div>
@@ -905,10 +980,10 @@
         <div class="player-center-section">
             <div class="player-controls">
                 <button class="player-control-button" id="prevButton">
-                    <img src="sled.png" alt="Предыдущий трек" class="flip-horizontal">
+                    <img src="sled.png" alt="Предыдущий трек">
                 </button>
                 <button class="player-control-button" id="playPauseButton">
-                    <img src="play.png" alt="Воспроизвести/Пауза" id="playPauseIcon">
+                    <img src="play.png" alt="Воспроизвести/Пауза" id="mainPlayPauseIcon">
                 </button>
                 <button class="player-control-button" id="nextButton">
                     <img src="sled.png" alt="Следующий трек">
@@ -917,7 +992,9 @@
             <div class="progress-container">
                 <div class="progress-time" id="currentTime">0:00</div>
                 <div class="progress-bar-wrapper" id="progressBarWrapper">
-                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-bar-thumb"></div>
+                    </div>
                 </div>
                 <div class="progress-time" id="durationTime">0:00</div>
             </div>
@@ -940,14 +1017,14 @@
             const editIconOverlay = photoButton.querySelector('.edit-icon-overlay');
             const musicContainer = document.getElementById('musicContainer');
 
-            // Элементы управления плеером
             const audioPlayer = document.getElementById('audioPlayer');
             const playPauseButton = document.getElementById('playPauseButton');
-            const playPauseIcon = document.getElementById('playPauseIcon');
+            const mainPlayPauseIcon = document.getElementById('mainPlayPauseIcon');
             const prevButton = document.getElementById('prevButton');
             const nextButton = document.getElementById('nextButton');
             const progressBar = document.getElementById('progressBar');
             const progressBarWrapper = document.getElementById('progressBarWrapper');
+            const progressBarThumb = document.querySelector('.progress-bar-thumb');
             const currentTimeDisplay = document.getElementById('currentTime');
             const durationTimeDisplay = document.getElementById('durationTime');
             const volumeSlider = document.getElementById('volumeSlider');
@@ -956,17 +1033,20 @@
             const currentSongTitle = document.getElementById('currentSongTitle');
             const currentArtistName = document.getElementById('currentArtistName');
 
-            let musicData = [];
-            let currentTrackIndex = -1; // Индекс текущего трека
+            const playerAlbumPlayPause = document.getElementById('playerAlbumPlayPause');
+            const playerAlbumPlayPauseIcon = document.getElementById('playerAlbumPlayPauseIcon');
 
-            // --- Вспомогательная функция для форматирования времени ---
+            let musicData = [];
+            let currentTrackIndex = -1;
+            let isDraggingProgressBar = false;
+            let lastVolume = audioPlayer.volume;
+
             function formatTime(seconds) {
                 const minutes = Math.floor(seconds / 60);
                 const remainingSeconds = Math.floor(seconds % 60);
                 return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
             }
 
-            // --- Логика для навигационных кнопок ---
             const initialActiveButton = document.querySelector('.nav-button[data-button="home"]');
             if (initialActiveButton) {
                 initialActiveButton.classList.add('active');
@@ -979,7 +1059,6 @@
                 });
             });
 
-            // --- Логика для выбора фото ---
             function updatePhotoButtonState() {
                 const savedImage = localStorage.getItem('profilePicture');
                 if (savedImage) {
@@ -1011,17 +1090,16 @@
                 }
             });
 
-            // --- Логика загрузки и отображения музыки из JSON ---
             async function loadMusic() {
                 try {
                     const response = await fetch('music.json');
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status} - ${response.statusText || 'Unknown error'}`);
                     }
-                    musicData = await response.json(); // Сохраняем загруженные данные
+                    musicData = await response.json();
                     displayMusic(musicData);
                     if (musicData.length > 0) {
-                        loadTrack(0); // Загружаем первый трек по умолчанию
+                        loadTrack(0, false);
                     }
                 } catch (error) {
                     console.error('Ошибка загрузки музыки:', error);
@@ -1043,10 +1121,8 @@
                                 <img src="play.png" alt="Воспроизвести">
                             </div>
                         `;
-                        // Добавляем обработчик клика для каждой карточки
                         musicCard.addEventListener('click', () => {
-                            loadTrack(index);
-                            playTrack();
+                            loadTrack(index, true);
                         });
                         musicContainer.appendChild(musicCard);
                     });
@@ -1055,36 +1131,46 @@
                 }
             }
 
-            // --- Функции управления плеером ---
-            function loadTrack(index) {
-                if (index < 0 || index >= musicData.length) return; // Проверка границ
+            function loadTrack(index, playImmediately = false) {
+                if (index < 0 || index >= musicData.length) return;
                 currentTrackIndex = index;
                 const track = musicData[currentTrackIndex];
                 audioPlayer.src = track.link;
                 currentAlbumArt.src = track.avatar;
                 currentSongTitle.textContent = track.title;
                 currentArtistName.textContent = track.artist;
-                audioPlayer.load(); // Перезагружаем аудио
-                updatePlayPauseIcon();
+                audioPlayer.currentTime = 0;
+                progressBar.style.width = '0%';
+                currentTimeDisplay.textContent = '0:00';
+
+                audioPlayer.load();
+
+                if (playImmediately) {
+                    playTrack();
+                } else {
+                    updatePlayPauseIcons();
+                }
             }
 
             function playTrack() {
                 if (audioPlayer.src === "" || currentTrackIndex === -1) {
-                    // Если трек не выбран, пытаемся загрузить первый
                     if (musicData.length > 0) {
-                        loadTrack(0);
+                        loadTrack(0, true);
+                        return;
                     } else {
                         console.warn("Нет доступных треков для воспроизведения.");
                         return;
                     }
                 }
-                audioPlayer.play();
-                updatePlayPauseIcon();
+                audioPlayer.play().catch(error => {
+                    console.error("Ошибка воспроизведения:", error);
+                });
+                updatePlayPauseIcons();
             }
 
             function pauseTrack() {
                 audioPlayer.pause();
-                updatePlayPauseIcon();
+                updatePlayPauseIcons();
             }
 
             function togglePlayPause() {
@@ -1097,98 +1183,123 @@
 
             function nextTrack() {
                 let nextIndex = (currentTrackIndex + 1) % musicData.length;
-                loadTrack(nextIndex);
-                playTrack();
+                loadTrack(nextIndex, true);
             }
 
             function prevTrack() {
                 let prevIndex = (currentTrackIndex - 1 + musicData.length) % musicData.length;
-                loadTrack(prevIndex);
-                playTrack();
+                loadTrack(prevIndex, true);
             }
 
-            function updatePlayPauseIcon() {
-                playPauseIcon.src = audioPlayer.paused ? 'play.png' : 'pause.png';
+            function updatePlayPauseIcons() {
+                const iconSrc = audioPlayer.paused ? 'play.png' : 'pause.png';
+                mainPlayPauseIcon.src = iconSrc;
+                playerAlbumPlayPauseIcon.src = iconSrc;
             }
 
-            // --- Обработчики событий плеера ---
+            function updateVolumeIcon() {
+                if (audioPlayer.volume === 0) {
+                    volumeIcon.src = 'mute.png';
+                } else {
+                    volumeIcon.src = 'zvyk.png';
+                }
+            }
+
             playPauseButton.addEventListener('click', togglePlayPause);
+            playerAlbumPlayPause.addEventListener('click', togglePlayPause);
             prevButton.addEventListener('click', prevTrack);
             nextButton.addEventListener('click', nextTrack);
 
             audioPlayer.addEventListener('timeupdate', () => {
-                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                progressBar.style.width = `${progress}%`;
-                currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                if (!isDraggingProgressBar && audioPlayer.duration) {
+                    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                }
             });
 
             audioPlayer.addEventListener('loadedmetadata', () => {
-                durationTimeDisplay.textContent = formatTime(audioPlayer.duration);
-                // Если это первый трек или обновился метаданные, и он не играл, ставим его на паузу
-                if (currentTrackIndex === 0 && audioPlayer.paused && audioPlayer.currentTime === 0) {
-                    // Do nothing, keep paused
-                } else if (!audioPlayer.paused) {
-                    // Если трек играет, или только что был выбран, но не начался, убедиться, что играет
-                    playTrack();
+                if (audioPlayer.duration) {
+                    durationTimeDisplay.textContent = formatTime(audioPlayer.duration);
                 } else {
-                    // Если трек был на паузе, он должен остаться на паузе после загрузки метаданных
-                    // Или если это новый трек, но мы просто его загрузили без автоматического воспроизведения
-                    updatePlayPauseIcon();
+                    durationTimeDisplay.textContent = '0:00';
                 }
+                updatePlayPauseIcons();
+                updateVolumeIcon();
             });
-
 
             audioPlayer.addEventListener('ended', () => {
-                nextTrack(); // Автоматическое переключение на следующий трек
+                nextTrack();
             });
 
-            // Прокрутка прогресс-бара
-            progressBarWrapper.addEventListener('click', (e) => {
-                if (audioPlayer.duration) { // Проверяем, что продолжительность известна
+            progressBarWrapper.addEventListener('mousedown', (e) => {
+                if (!audioPlayer.duration) return;
+
+                isDraggingProgressBar = true;
+                const wasPlaying = !audioPlayer.paused;
+
+                if (wasPlaying) {
+                    audioPlayer.pause();
+                }
+
+                const updateProgress = (event) => {
                     const rect = progressBarWrapper.getBoundingClientRect();
-                    const clickX = e.clientX - rect.left;
+                    let clientX = event.clientX;
+
+                    if (clientX < rect.left) clientX = rect.left;
+                    if (clientX > rect.right) clientX = rect.right;
+
+                    const clickX = clientX - rect.left;
                     const width = rect.width;
                     const percent = clickX / width;
+                    
                     audioPlayer.currentTime = audioPlayer.duration * percent;
+                    progressBar.style.width = `${percent * 100}%`;
+                    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                };
+
+                updateProgress(e);
+
+                const handleMouseUp = () => {
+                    isDraggingProgressBar = false;
+                    if (wasPlaying) {
+                        audioPlayer.play().catch(e => console.error("Play error:", e));
+                    }
+                    document.removeEventListener('mousemove', updateProgress);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                };
+
+                document.addEventListener('mousemove', updateProgress);
+                document.addEventListener('mouseup', handleMouseUp);
+            });
+
+            audioPlayer.addEventListener('seeked', () => {
+                if (!isDraggingProgressBar && audioPlayer.duration) {
+                    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                    progressBar.style.width = `${progress}%`;
                 }
             });
 
-            // Регулятор громкости
             volumeSlider.addEventListener('input', () => {
                 audioPlayer.volume = volumeSlider.value;
-                if (volumeSlider.value == 0) {
-                    volumeIcon.src = 'zvyk.png'; // Используем zvyk.png для Mute
-                } else {
-                    volumeIcon.src = 'zvyk.png'; // Для любых других значений - zvyk.png
-                }
+                updateVolumeIcon();
             });
 
-            // Добавляем логику для клика по иконке громкости (Mute/Unmute)
-            let lastVolume = audioPlayer.volume; // Сохраняем последнюю громкость перед заглушением
             volumeIcon.addEventListener('click', () => {
                 if (audioPlayer.volume === 0) {
-                    audioPlayer.volume = lastVolume > 0 ? lastVolume : 0.7; // Восстановить предыдущую громкость или 0.7
+                    audioPlayer.volume = lastVolume > 0 ? lastVolume : 0.7;
                     volumeSlider.value = audioPlayer.volume;
-                    volumeIcon.src = 'zvyk.png'; // Снова zvyk.png
                 } else {
-                    lastVolume = audioPlayer.volume; // Сохраняем текущую громкость
+                    lastVolume = audioPlayer.volume;
                     volumeSlider.value = 0;
                     audioPlayer.volume = 0;
-                    volumeIcon.src = 'zvyk.png'; // Mute - zvyk.png
                 }
+                updateVolumeIcon();
             });
-
-            // Инициализация громкости
+            
             audioPlayer.volume = volumeSlider.value;
-            // Установим иконку громкости при загрузке страницы
-            if (audioPlayer.volume === 0) {
-                volumeIcon.src = 'zvyk.png';
-            } else {
-                volumeIcon.src = 'zvyk.png';
-            }
+            updateVolumeIcon();
 
-
-            // Загружаем музыку при загрузке страницы
             loadMusic();
         });
     </script>
