@@ -22,7 +22,9 @@
     user-select: none;          /* Standard */
     /* Запрет перетаскивания (для всего body) */
     -webkit-user-drag: none;
-    user-drag: none; /* Исправлено: удален -moz-user-drag и -ms-user-drag, так как они не являются стандартными и вызывают предупреждения */
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
   }
 
   /* Контейнер для падающих печенек */
@@ -38,6 +40,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
@@ -56,6 +60,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
@@ -89,6 +95,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
   .cookie-link:hover {
@@ -104,55 +112,6 @@
     /* Специально для изображений: атрибут draggable="false" */
     user-select: none;
     -webkit-user-drag: none;
-  }
-
-  /* Стиль для Золотой печеньки */
-  .golden-cookie {
-    position: absolute;
-    width: 70px; /* Размер золотой печеньки */
-    height: 70px;
-    background-image: url('image/golden_cookie.png'); /* Путь к изображению золотой печеньки */
-    background-size: cover;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 5; /* Чтобы была поверх всего */
-    opacity: 0; /* Изначально невидима */
-    transform: scale(0.5); /* Изначально меньше */
-    animation: fadeInScale 0.5s forwards, pulse 1.5s infinite alternate; /* Анимация появления и пульсации */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    user-drag: none;
-  }
-
-  @keyframes fadeInScale {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes pulse {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.1);
-    }
-  }
-
-  /* Анимация исчезновения золотой печеньки */
-  @keyframes fadeOutShrink {
-    from {
-      opacity: 1;
-      transform: scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: scale(0.5);
-    }
   }
 
   /* Анимация для "плавающих" куки при клике */
@@ -171,27 +130,12 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
-  /* Анимация для +кол-во */
-  .plus-amount {
-    position: absolute;
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #FFD700; /* Золотой цвет для "+N" от золотой печеньки */
-    opacity: 0;
-    animation: fadeAndMove 1s forwards;
-    pointer-events: none;
-    z-index: 10;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
-  /* Анимация для +1 (от обычной печеньки) */
+  /* Анимация для +1 */
   .plus-one {
     position: absolute;
     font-size: 1.8em;
@@ -251,6 +195,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
@@ -287,6 +233,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
@@ -313,6 +261,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
   .info-panel p {
@@ -339,12 +289,12 @@
   /* --- Стили для секции Магазин --- */
   .shop-section {
     position: absolute;
-    top: 10px; /* Поднято выше */
-    height: calc(100vh - 20px); /* Учитываем отступы */
+    top: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 0; /* Уменьшен padding */
+    padding: 20px 0;
     box-sizing: border-box;
     z-index: 3; /* Поверх фоновых печенек */
     overflow-y: auto; /* Если панелей будет много, появится скролл */
@@ -353,6 +303,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
@@ -362,8 +314,8 @@
     font-size: 2em;
     color: white;
     text-transform: lowercase;
-    margin-top: 5px; /* Поднято выше */
-    margin-bottom: 15px; /* Немного уменьшен отступ */
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
     width: 100%; /* Заголовок занимает всю ширину */
     -webkit-user-select: none;
@@ -377,14 +329,14 @@
     background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
     border-radius: 8px;
     padding: 10px 15px;
-    margin-bottom: 8px; /* Отступ между панелями уменьшен */
+    margin-bottom: 10px; /* Отступ между панелями */
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
     font-family: 'Lora', serif;
     box-sizing: border-box;
-    min-height: 65px; /* Минимальная высота для каждой панели уменьшена */
+    min-height: 70px; /* Минимальная высота для каждой панели */
     cursor: pointer; /* Делаем панели кликабельными */
     transition: background-color 0.2s ease, transform 0.1s ease;
     -webkit-user-select: none;
@@ -392,6 +344,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
     user-drag: none;
   }
 
@@ -464,8 +418,7 @@
 
 <div class="cookie-container">
   <a href="#" class="cookie-link" id="cookie-button">
-    <img src="image/cookie.png" alt="Куки" draggable="false">
-  </a>
+    <img src="image/cookie.png" alt="Куки" draggable="false"> </a>
 </div>
 
 <div class="wood-plank-left" id="wood-plank-left"></div>
@@ -494,15 +447,8 @@
 
   let totalCookies = 0;
   let cookiesPerSecond = 0;
-  let cookiesPerClick = 1; 
+  let cookiesPerClick = 1; // Начальное значение: 1 печенька за клик
 
-  // Переменные для Золотой печеньки
-  let goldenCookieTimeout;
-  let currentGoldenCookie = null; // Для отслеживания текущей золотой печеньки
-  const GOLDEN_COOKIE_MIN_SPAWN_TIME = 10000; // 10 секунд
-  const GOLDEN_COOKIE_MAX_SPAWN_TIME = 30000; // 30 секунд
-  const GOLDEN_COOKIE_LIFESPAN = 5000; // 5 секунд, после чего исчезает
-  
   // Товары в магазине (базовые значения)
   const shopItemsConfig = [
     { id: 'auto_clicker', name: 'Авто-кликер', type: 'cps_item', basePrice: 100, cps: 1, owned: 0, imgSrc: 'image/click.png' }, 
@@ -576,83 +522,58 @@
     shopSection.style.width = `calc(100vw - ${shopSection.style.left})`; 
   }
 
-  // Обновление состояния игры с высокой частотой для плавности
-  function gameTick() {
-    // Делим CPS на количество обновлений в секунду
-    totalCookies += cookiesPerSecond / 60; // Обновляем 60 раз в секунду
+  // Обновление состояния игры каждую секунду и сохранение
+  function updateGameLoop() {
+    totalCookies += cookiesPerSecond;
     totalCookiesDisplay.textContent = formatNumber(totalCookies); 
-    // renderShopItems(); // Не нужно обновлять магазин каждую долю секунды, только при изменениях или раз в секунду
-    requestAnimationFrame(gameTick); // Запрашиваем следующий кадр анимации
-  }
-
-  // Обновление магазина и сохранение раз в секунду (или по необходимости)
-  setInterval(() => {
     renderShopItems(); 
     saveGame(); 
-  }, 1000); 
+  }
+
+  setInterval(updateGameLoop, 1000); 
 
   // Функция для форматирования больших чисел
   function formatNumber(num) {
-    // Используем Math.floor для CPS, чтобы избежать дробных значений в отображении
-    // но храним CPS как десятичное, чтобы сохранить точность
-    const displayNum = Math.floor(num); 
-    if (displayNum >= 1000000000) {
-        return (displayNum / 1000000000).toFixed(2).replace(/\.0+$/, '') + ' млрд';
+    if (num >= 1000000000) {
+        return (num / 1000000000).toFixed(2).replace(/\.0+$/, '') + ' млрд';
     }
-    if (displayNum >= 1000000) {
-        return (displayNum / 1000000).toFixed(2).replace(/\.0+$/, '') + ' млн';
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(2).replace(/\.0+$/, '') + ' млн';
     }
-    if (displayNum >= 1000) {
-        return (displayNum / 1000).toFixed(2).replace(/\.0+$/, '') + ' тыс';
+    if (num >= 1000) {
+        return (num / 1000).toFixed(2).replace(/\.0+$/, '') + ' тыс';
     }
-    return displayNum.toLocaleString('ru-RU');
+    return Math.floor(num).toLocaleString('ru-RU');
   }
 
   // --- Рендеринг и логика магазина ---
   function renderShopItems() {
-    // Проверяем, изменились ли данные магазина, чтобы избежать лишних перерисовок
-    let shopHtml = '<h2>магазин</h2>'; 
-    let needsUpdate = false;
+    shopSection.innerHTML = '<h2>магазин</h2>'; 
 
     shopItems.forEach(item => {
       const currentPrice = Math.floor(item.basePrice * Math.pow(1.15, item.owned)); 
       
-      const panelClass = totalCookies < currentPrice ? 'shop-panel disabled' : 'shop-panel';
-      const newPanelHtml = `
-        <img src="${item.imgSrc}" alt="${item.name}" class="item-icon" draggable="false"> 
-        <div class="item-info">
+      const panel = document.createElement('div');
+      panel.classList.add('shop-panel');
+      panel.dataset.itemId = item.id; 
+
+      if (totalCookies < currentPrice) {
+        panel.classList.add('disabled');
+      }
+
+      panel.innerHTML = `
+        <img src="${item.imgSrc}" alt="${item.name}" class="item-icon" draggable="false"> <div class="item-info">
           <span class="item-name">${item.name}</span>
-          <span class="item-price">${formatNumber(currentPrice)} <img src="image/cookie.png" alt="печенье" draggable="false"></span> 
-        </div>
+          <span class="item-price">${formatNumber(currentPrice)} <img src="image/cookie.png" alt="печенье" draggable="false"></span> </div>
         <span class="item-owned">x${item.owned}</span>
       `;
-
-      // Простая проверка, можно сделать более детальную, если нужно
-      if (!shopSection.querySelector(`[data-item-id="${item.id}"]`) || 
-          shopSection.querySelector(`[data-item-id="${item.id}"]`).className !== panelClass ||
-          shopSection.querySelector(`[data-item-id="${item.id}"]`).innerHTML.trim() !== newPanelHtml.trim()) {
-        needsUpdate = true;
-      }
-      shopHtml += `<div class="${panelClass}" data-item-id="${item.id}">${newPanelHtml}</div>`;
+      
+      panel.addEventListener('click', () => buyItem(item.id));
+      
+      shopSection.appendChild(panel);
     });
 
-    if (needsUpdate || shopSection.innerHTML.trim() !== shopHtml.trim()) { // Также сравним полностью HTML
-      shopSection.innerHTML = shopHtml; 
-      // После обновления DOM, заново прикрепляем обработчики событий
-      shopItems.forEach(item => {
-        const panel = shopSection.querySelector(`[data-item-id="${item.id}"]`);
-        if (panel) {
-          panel.addEventListener('click', () => buyItem(item.id));
-        }
-      });
-    }
-
-    // Обновляем CPS только если изменилось
-    const currentCpsDisplay = cookiesPerSecondDisplay.textContent;
-    const newCpsDisplay = formatNumber(cookiesPerSecond);
-    if (currentCpsDisplay !== newCpsDisplay) {
-      cookiesPerSecondDisplay.textContent = newCpsDisplay;
-    }
+    cookiesPerSecondDisplay.textContent = formatNumber(cookiesPerSecond); 
   }
 
   function buyItem(itemId) {
@@ -689,8 +610,6 @@
     renderShopItems(); 
 
     saveGame(); 
-    scheduleGoldenCookieSpawn(); // Запускаем спавн золотых печенек
-    requestAnimationFrame(gameTick); // Запускаем плавное обновление
   });
 
   // Дополнительное сохранение при закрытии/обновлении страницы
@@ -777,104 +696,6 @@
       });
     }
   });
-
-  // --- Функции для Золотой печеньки ---
-
-  function scheduleGoldenCookieSpawn() {
-    // Отменяем предыдущий таймер, если он был
-    if (goldenCookieTimeout) {
-      clearTimeout(goldenCookieTimeout);
-    }
-    // Удаляем текущую золотую печеньку, если она есть
-    if (currentGoldenCookie) {
-      currentGoldenCookie.remove();
-      currentGoldenCookie = null;
-    }
-
-    const spawnDelay = Math.random() * (GOLDEN_COOKIE_MAX_SPAWN_TIME - GOLDEN_COOKIE_MIN_SPAWN_TIME) + GOLDEN_COOKIE_MIN_SPAWN_TIME;
-    goldenCookieTimeout = setTimeout(spawnGoldenCookie, spawnDelay);
-  }
-
-  function spawnGoldenCookie() {
-    // Если уже есть золотая печенька, не спавним новую
-    if (currentGoldenCookie) {
-        return;
-    }
-
-    const goldenCookie = document.createElement('div');
-    goldenCookie.classList.add('golden-cookie');
-
-    const mainCookieRect = mainCookie.getBoundingClientRect();
-    const mainCookieCenterX = mainCookieRect.left + mainCookieRect.width / 2;
-    const mainCookieCenterY = mainCookieRect.top + mainCookieRect.height / 2;
-
-    const spawnRadius = mainCookieRect.width / 2 * 0.8; // Область спавна вокруг основной печеньки
-
-    // Случайная позиция внутри круга вокруг главной печеньки
-    const angle = Math.random() * Math.PI * 2;
-    const distance = Math.random() * spawnRadius;
-
-    const startX = mainCookieCenterX + distance * Math.cos(angle) - goldenCookie.offsetWidth / 2;
-    const startY = mainCookieCenterY + distance * Math.sin(angle) - goldenCookie.offsetHeight / 2;
-
-    goldenCookie.style.left = `${startX}px`;
-    goldenCookie.style.top = `${startY}px`;
-
-    document.body.appendChild(goldenCookie);
-    currentGoldenCookie = goldenCookie; // Сохраняем ссылку на текущую золотую печеньку
-
-    // Таймер на исчезновение печеньки
-    const despawnTimeout = setTimeout(() => {
-      if (goldenCookie && goldenCookie.parentNode) {
-        goldenCookie.style.animation = 'fadeOutShrink 0.5s forwards'; // Анимация исчезновения
-        goldenCookie.addEventListener('animationend', () => {
-          goldenCookie.remove();
-          currentGoldenCookie = null;
-          scheduleGoldenCookieSpawn(); // Запланировать новый спавн после исчезновения
-        }, { once: true });
-      }
-    }, GOLDEN_COOKIE_LIFESPAN);
-
-    goldenCookie.addEventListener('click', (event) => {
-      // Удаляем таймер исчезновения, так как печенька была нажата
-      clearTimeout(despawnTimeout); 
-      collectGoldenCookie(event);
-      goldenCookie.style.animation = 'fadeOutShrink 0.2s forwards'; // Быстрая анимация исчезновения
-      goldenCookie.addEventListener('animationend', () => {
-        goldenCookie.remove();
-        currentGoldenCookie = null;
-        scheduleGoldenCookieSpawn(); // Запланировать новый спавн после сбора
-      }, { once: true });
-    });
-  }
-
-  function collectGoldenCookie(event) {
-    let earnedCookies;
-    if (cookiesPerSecond > 0) {
-      earnedCookies = cookiesPerSecond * (Math.random() * 4 + 1); // Может быть дробным
-    } else {
-      earnedCookies = Math.floor(Math.random() * 401) + 100; 
-    }
-    
-    totalCookies += earnedCookies;
-    totalCookiesDisplay.textContent = formatNumber(totalCookies);
-    renderShopItems();
-    saveGame();
-
-    const plusAmount = document.createElement('div');
-    plusAmount.classList.add('plus-amount');
-    plusAmount.textContent = `+${formatNumber(earnedCookies)}`; // Форматируем для отображения
-    plusAmount.style.left = `${event.clientX}px`;
-    plusAmount.style.top = `${event.clientY - 20}px`;
-    document.body.appendChild(plusAmount);
-
-    plusAmount.addEventListener('animationend', () => {
-      plusAmount.remove();
-    });
-  }
-
-  // --- Конец функций для Золотой печеньки ---
-
 </script>
 
 </body>
